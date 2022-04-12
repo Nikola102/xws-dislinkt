@@ -1,25 +1,31 @@
 package dislinkt.userService.Model;
 
+import java.time.LocalDateTime;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
+@Data
+@AllArgsConstructor
 @Document(collection = "users")
-@Getter
-@Setter
 public class User {
     @Id
     private String id;
 
+    // private String name;
+    private String email;
+    // private String phone;
+    // private String gender;
+    // private LocalDateTime dob;
     private String username;
-    private String mail;
-    
-    public User(String username, String mail) {
-        this.username = username;
-        this.mail = mail;
-    }
-
+    private String password;
+    // private String bio;
+    // private String experience;
+    // private String education;
+    // private String skills;
+    // private String interests;
+    // private boolean isPrivate;
 }
