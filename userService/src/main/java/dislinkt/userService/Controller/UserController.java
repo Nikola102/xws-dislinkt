@@ -81,4 +81,13 @@ public class UserController {
         return new ResponseEntity<String>("User deleted", HttpStatus.OK);
     }
 
+    @GetMapping(path = "/search/{username}", 
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> searchForUsername(@PathVariable("username") String username){
+       ArrayList<User> users = userService.findByUsernameContaining(username);
+        if(users.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<ArrayList<User>>(users, HttpStatus.OK);
+    }
+
 }

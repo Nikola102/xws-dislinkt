@@ -62,4 +62,8 @@ public class UserService {
         System.out.println("All users deleted!");
     }
 
+    public ArrayList<User> findByUsernameContaining(String usernamePart){
+        return userRepo.findByUsernameContaining(usernamePart);
+    }
+
 }

@@ -10,8 +10,9 @@ import dislinkt.userService.Model.User;
 @Repository
 public interface UserRepo extends MongoRepository<User, Long>{
 
-    User findByEmail(String email);
-    User findByUsername(String email);
+    public User findByEmail(String email);
+    public User findByUsername(String email);
     public ArrayList<User> findAll();
+    public ArrayList<User> findByUsernameContaining(String usernamePart);
     
 }
