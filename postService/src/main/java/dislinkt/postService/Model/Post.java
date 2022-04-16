@@ -21,6 +21,7 @@ public class Post {
 	private String description;
 	private String image;
 	private String userId;
+    private String username;
 
 	private int likes;
 	private int dislikes;
@@ -28,11 +29,12 @@ public class Post {
 	private ArrayList<String> likedUserIds;
 	private ArrayList<String> dislikedUserIds;
 
-    public Post(String title, String description, String image, String userId, int likes, int dislikes) {
+    public Post(String title, String description, String image, String userId, String username , int likes, int dislikes) {
         this.title = title;
         this.description = description;
         this.image = image;
         this.userId = userId;
+        this.username = username;
         this.likes = likes;
         this.dislikes = dislikes;
 

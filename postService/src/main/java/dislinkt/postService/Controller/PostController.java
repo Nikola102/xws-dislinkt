@@ -34,11 +34,11 @@ public class PostController {
     public void mdb(){
         System.out.println("mongodb.data called from postService controller");
         postService.deleteAllPosts();
-        postService.save(new Post("id11", "Naslov1", "deskripcijaxDDDD", "id1", 2, 2));
-        postService.save(new Post("id12", "Naslov2", "deskripcijaxDDDD", "id1", 2, 2));
-        postService.save(new Post("id13", "Naslov3", "deskripcijaxDDDD", "id1", 2, 2));
-        postService.save(new Post("id14", "Naslov4", "deskripcijaxDDDD", "id1", 2, 2));
-        postService.save(new Post("id15", "Naslov5", "deskripcijaxDDDD", "id1", 2, 2));
+        postService.save(new Post("id11", "Naslov1", "deskripcijaxDDDD", "id1", "Ivance69", 2, 2));
+        postService.save(new Post("id12", "Naslov2", "deskripcijaxDDDD", "id1", "Ivance69", 2, 2));
+        postService.save(new Post("id13", "Naslov3", "deskripcijaxDDDD", "id1", "Ivance69", 2, 2));
+        postService.save(new Post("id14", "Naslov4", "deskripcijaxDDDD", "id1", "Ivance69", 2, 2));
+        postService.save(new Post("id15", "Naslov5", "deskripcijaxDDDD", "id1", "Ivance69", 2, 2));
 
     }
     
@@ -62,6 +62,16 @@ public class PostController {
         return new ResponseEntity<ArrayList<Post>>(postService.getAllPostsByUserId(userId), HttpStatus.OK);
     }
 
+    //get all posts by username
+    @GetMapping(path = "/{username}",
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAllPostsByUsername(@PathVariable String username){
+        ArrayList<Post> posts = postService.getAllPostsByUsername(username);
+        if(posts.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); 
+        return new ResponseEntity<ArrayList<Post>>(postService.getAllPostsByUsername(username), HttpStatus.OK);
+    }
+
     //delete post by postId
     @DeleteMapping(path = "/{postId}")
     public ResponseEntity<?> deletePost(@PathVariable String postId){
@@ -70,7 +80,7 @@ public class PostController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         catch(Exception e){
-            return new ResponseEntity<String>(e.getMessage() ,HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 
@@ -81,10 +91,10 @@ public class PostController {
     public ResponseEntity<?> putPost(@PathVariable String postId, @RequestBody Post post){
         try{
             postService.save(post);
-            return new ResponseEntity<Post>(post ,HttpStatus.OK);
+            return new ResponseEntity<Post>(post, HttpStatus.OK);
         }
         catch(Exception e){
-            return new ResponseEntity<String>(e.getMessage() ,HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
 

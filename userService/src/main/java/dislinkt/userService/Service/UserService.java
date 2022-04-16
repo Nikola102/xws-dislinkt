@@ -66,4 +66,16 @@ public class UserService {
         return userRepo.findByUsernameContaining(usernamePart);
     }
 
+    public User login(String username, String password){
+        User user = userRepo.findByUsername(username);
+        if(user == null){
+            throw new IllegalStateException("User does not exist!");
+        }
+        if(!user.getPassword().equals(password)){
+            throw new IllegalStateException("Password is incorrect!");
+        }
+        return user;
+    }
+    
+
 }

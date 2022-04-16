@@ -44,6 +44,9 @@ public class PostService {
         return postRepo.findAllByUserId(userId);
     }
 
+    public ArrayList<Post> getAllPostsByUsername(String username) {
+        return postRepo.findAllByUsername(username);
+    }
 
 
 

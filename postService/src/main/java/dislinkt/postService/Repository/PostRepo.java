@@ -12,6 +12,7 @@ public interface PostRepo extends MongoRepository<Post, Long>{
     
     public ArrayList<Post> findAll();
     public ArrayList<Post> findAllByUserId(String userId);
+    public ArrayList<Post> findAllByUsername(String username);
     public Post findById(String postId);
 
 }

@@ -23,11 +23,11 @@ public class User {
     private String phone;
     private String gender;
     private String bio;
-
+    
+    private boolean isPrivate;
     // private LocalDateTime dob;
     // private String experience;
     // private String education;
     // private String skills;
     // private String interests;
-    // private boolean isPrivate;
 }
