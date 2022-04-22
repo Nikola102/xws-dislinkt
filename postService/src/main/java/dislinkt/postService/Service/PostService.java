@@ -37,6 +37,7 @@ public class PostService {
     }
 
     public void deleteAllPosts() {
+        postRepo.deleteAll();
         System.out.println("Deleting all posts...");
     }
 
