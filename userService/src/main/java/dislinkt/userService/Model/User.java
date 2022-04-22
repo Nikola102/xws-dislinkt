@@ -1,5 +1,7 @@
 package dislinkt.userService.Model;
 
+import java.util.ArrayList;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,9 +27,10 @@ public class User {
     private String bio;
     
     private boolean isPrivate;
-    // private LocalDateTime dob;
-    // private String experience;
-    // private String education;
-    // private String skills;
-    // private String interests;
+    private ArrayList<String> following;
+     
+    private String experience;
+    private String education;
+    private String skills;
+    private String interests;
 }

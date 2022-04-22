@@ -31,11 +31,11 @@ public class UserController {
     public void mdb(){
         System.out.println("mongodb.data called from userService controller");
         userService.deleteAllUsers();
-        userService.save(new User("id1", "Ivance69", "password", "Ivan", "Lukovic", "ivan@notuns.com", "0600000000", "male", "bio sam jak, vise nisam", false));
-        userService.save(new User("id2", "ZiksaZmija", "password", "Mihajlo", "Zivkovic", "mihajlo@gmail.com", "0600000000", "male", "jak sam", false));
-        userService.save(new User("id3", "IgorIbor", "password", "Igor", "Jakovljevic", "igor@gmail.com", "0600000000", "male", "jak sam", false));
-        userService.save(new User("id4", "Buksa", "password", "Vukasin", "Lupurovic", "vukasin@gmail.com", "0600000000", "male", "jak sam", false));
-        userService.save(new User("id5", "Mnikola", "password", "Nikola", "Matijevic", "nikola@gmail.com", "0600000000", "male", "jak sam", false));
+        userService.save(new User("id1", "Ivance69", "password", "Ivan", "Lukovic", "ivan@notuns.com", "0600000000", "male", "bio sam jak, vise nisam", false, null, "", "", "", ""));
+        userService.save(new User("id2", "ZiksaZmija", "password", "Mihajlo", "Zivkovic", "mihajlo@gmail.com", "0600000000", "male", "jak sam", false,  null, "", "", "", ""));
+        userService.save(new User("id3", "IgorIbor", "password", "Igor", "Jakovljevic", "igor@gmail.com", "0600000000", "male", "jak sam", false,  null, "", "", "", ""));
+        userService.save(new User("id4", "Buksa", "password", "Vukasin", "Lupurovic", "vukasin@gmail.com", "0600000000", "male", "jak sam", false,  null, "", "", "", ""));
+        userService.save(new User("id5", "Mnikola", "password", "Nikola", "Matijevic", "nikola@gmail.com", "0600000000", "male", "jak sam", false, null, "", "", "", ""));
     }
 
     //send message
