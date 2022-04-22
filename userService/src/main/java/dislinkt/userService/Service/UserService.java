@@ -76,6 +76,30 @@ public class UserService {
         }
         return user;
     }
+
+    public User follow(String followerUsername, String toFollowUsername) {
+        User followerUser = userRepo.findByUsername(followerUsername);
+        User toFollowUser = userRepo.findByUsername(toFollowUsername);
+
+        if(followerUser == null){
+            throw new IllegalStateException("followerUser does not exist!");
+        }
+        if(toFollowUser == null){
+            throw new IllegalStateException("toFollowUser does not exist!");
+        }
+        System.out.println(followerUser);
+        if(followerUser.getFollowing().contains(toFollowUsername)){
+            throw new IllegalStateException("You already follow this user!");
+        }
+
+        if(toFollowUser.isPrivate()){
+            toFollowUser.getFollowRequests().add(followerUsername);
+            return userRepo.save(toFollowUser);
+        }else{
+            followerUser.getFollowing().add(toFollowUsername);
+            return userRepo.save(followerUser);
+        }
+    }
     
 
 }

@@ -1,6 +1,7 @@
 package dislinkt.userService.Controller;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,11 +33,11 @@ public class UserController {
     public void mdb(){
         System.out.println("mongodb.data called from userService controller");
         userService.deleteAllUsers();
-        userService.save(new User("id1", "Ivance69", "password", "Ivan", "Lukovic", "ivan@notuns.com", "0600000000", "male", "bio sam jak, vise nisam", false, null, "", "", "", ""));
-        userService.save(new User("id2", "ZiksaZmija", "password", "Mihajlo", "Zivkovic", "mihajlo@gmail.com", "0600000000", "male", "jak sam", false,  null, "", "", "", ""));
-        userService.save(new User("id3", "IgorIbor", "password", "Igor", "Jakovljevic", "igor@gmail.com", "0600000000", "male", "jak sam", false,  null, "", "", "", ""));
-        userService.save(new User("id4", "Buksa", "password", "Vukasin", "Lupurovic", "vukasin@gmail.com", "0600000000", "male", "jak sam", false,  null, "", "", "", ""));
-        userService.save(new User("id5", "Mnikola", "password", "Nikola", "Matijevic", "nikola@gmail.com", "0600000000", "male", "jak sam", false, null, "", "", "", ""));
+        userService.save(new User("id1", "Ivance69", "password", "Ivan", "Lukovic", "ivan@notuns.com", "0600000000", "male", "bio sam jak, vise nisam", false, new ArrayList<String>(), new ArrayList<String>(), "", "", "", ""));
+        userService.save(new User("id2", "ZiksaZmija", "password", "Mihajlo", "Zivkovic", "mihajlo@gmail.com", "0600000000", "male", "jak sam", false,  new ArrayList<String>(), new ArrayList<String>(), "", "", "", ""));
+        userService.save(new User("id3", "IgorIbor", "password", "Igor", "Jakovljevic", "igor@gmail.com", "0600000000", "male", "jak sam", true,  new ArrayList<String>(), new ArrayList<String>(), "", "", "", ""));
+        userService.save(new User("id4", "Buksa", "password", "Vukasin", "Lupurovic", "vukasin@gmail.com", "0600000000", "male", "jak sam", false,  new ArrayList<String>(), new ArrayList<String>(), "", "", "", ""));
+        userService.save(new User("id5", "Mnikola", "password", "Nikola", "Matijevic", "nikola@gmail.com", "0600000000", "male", "jak sam", false, new ArrayList<String>(), new ArrayList<String>(), "", "", "", ""));
     }
 
     //send message
@@ -110,4 +112,15 @@ public class UserController {
         }
     }
 
+
+    @PutMapping(path = "/follow", 
+        consumes = MediaType.APPLICATION_JSON_VALUE, 
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> follow(@RequestBody Map<String, String> followRequest){
+        try{
+            return new ResponseEntity<User>(userService.follow(followRequest.get("followerId"), followRequest.get("toFollowId")), HttpStatus.OK);
+        } catch (IllegalStateException e){
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
