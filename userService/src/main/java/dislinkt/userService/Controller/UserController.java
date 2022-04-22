@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import dislinkt.userService.Dto.LoginDto;
 import dislinkt.userService.Model.User;
 import dislinkt.userService.Service.UserService;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping(path = "/user")
@@ -109,5 +111,19 @@ public class UserController {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+    //put user
+    @PutMapping(
+        consumes = MediaType.APPLICATION_JSON_VALUE, 
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateUser(@RequestBody User user){
+        try {
+            return new ResponseEntity<User>(userService.save(user), HttpStatus.OK);
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+ 
 
 }

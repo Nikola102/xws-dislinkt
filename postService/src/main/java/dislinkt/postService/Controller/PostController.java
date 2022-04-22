@@ -4,6 +4,7 @@ import org.springframework.http.MediaType;
 
 import java.util.ArrayList;
 
+import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import dislinkt.postService.Model.Post;
 import dislinkt.postService.Service.PostService;
@@ -34,11 +37,11 @@ public class PostController {
     public void mdb(){
         System.out.println("mongodb.data called from postService controller");
         postService.deleteAllPosts();
-        postService.save(new Post("id11", "Naslov1", "deskripcijaxDDDD", "id1", "Ivance69", 0, 0));
-        postService.save(new Post("id12", "Naslov2", "deskripcijaxDDDD", "id1", "Ivance69", 0, 0));
-        postService.save(new Post("id13", "Naslov3", "deskripcijaxDDDD", "id1", "Ivance69", 0, 0));
-        postService.save(new Post("id14", "Naslov4", "deskripcijaxDDDD", "id1", "Ivance69", 0, 0));
-        postService.save(new Post("id15", "Naslov5", "deskripcijaxDDDD", "id1", "Ivance69", 0, 0));
+        postService.save(new Post("id11", "Naslov1", "deskripcijaxDDDD", "Ivance69", 0, 0));
+        postService.save(new Post("id12", "Naslov2", "deskripcijaxDDDD", "Ivance69", 0, 0));
+        postService.save(new Post("id13", "Naslov3", "deskripcijaxDDDD", "Ivance69", 0, 0));
+        postService.save(new Post("id14", "Naslov4", "deskripcijaxDDDD", "Ivance69", 0, 0));
+        postService.save(new Post("id15", "Naslov5", "deskripcijaxDDDD", "Ivance69", 0, 0));
 
     }
     
@@ -97,6 +100,20 @@ public class PostController {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+    //post post with image upload as base 64
+    @PostMapping(
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> postPost(@RequestBody Post post){
+        try{
+            postService.save(post);
+            return new ResponseEntity<Post>(post, HttpStatus.OK);
+        }
+        catch(Exception e){
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 
 }
