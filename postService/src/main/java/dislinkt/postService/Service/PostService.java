@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dislinkt.postService.Model.Comment;
 import dislinkt.postService.Model.Post;
 import dislinkt.postService.Repository.PostRepo;
 
@@ -18,6 +19,7 @@ public class PostService {
     }
 
     public Post findByPostId(String postId) {
+        System.out.println(postId);
         Post post = postRepo.findById(postId);
         if (post == null) {
             throw new IllegalStateException("Post does not exist!");
@@ -32,7 +34,7 @@ public class PostService {
         return true;
     }
 
-    public ArrayList<Post> getAllPosts() {
+    public ArrayList<Post> getAllPublicUserPosts() {
         return postRepo.findAll();
     }
 
@@ -49,6 +51,21 @@ public class PostService {
         return postRepo.findAllByUsername(username);
     }
 
+    public Post likePost(String userId, String postId) {
+        Post post = findByPostId(postId);
+        post.getLikedUserIds().add(userId);
+        return postRepo.save(post);
+    }
 
+    public Post dislikePost(String userId, String postId) {
+        Post post = findByPostId(postId);
+        post.getDislikedUserIds().add(userId);
+        return postRepo.save(post);
+    }
 
+    public Post commentPost(Comment newComment, String postId) {
+        Post post = findByPostId(postId);
+        post.getComments().add(newComment);
+        return postRepo.save(post);
+    }
 }

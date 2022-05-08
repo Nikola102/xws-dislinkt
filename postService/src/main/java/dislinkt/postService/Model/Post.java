@@ -24,19 +24,14 @@ public class Post {
 	private String userId;
     private String username;
 
-	private int likes;
-	private int dislikes;
-
-	private ArrayList<String> likedUserIds;
-	private ArrayList<String> dislikedUserIds;
+	private ArrayList<String> likedUserIds = new ArrayList<String>();
+	private ArrayList<String> dislikedUserIds = new ArrayList<String>();
+    private ArrayList<Comment> comments = new ArrayList<Comment>();
 
     public Post(String title, String description, String userId, String username , int likes, int dislikes) {
         this.title = title;
         this.description = description;
         this.userId = userId;
         this.username = username;
-        this.likes = likes;
-        this.dislikes = dislikes;
-
     }
 }

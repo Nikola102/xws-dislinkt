@@ -52,8 +52,14 @@ public class UserService {
         return true;
     }
 
-    public ArrayList<User> getAllUsers(){
-        return userRepo.findAll();
+    public ArrayList<User> getAllPublicUsers(){
+        ArrayList<User> users = new ArrayList<User>();
+        for (User user : userRepo.findAll()){
+            if (!user.isPrivate()){
+                users.add(user);
+            }
+        }
+        return users;
     }
 
     public void deleteAllUsers(){
@@ -87,7 +93,6 @@ public class UserService {
         if(toFollowUser == null){
             throw new IllegalStateException("toFollowUser does not exist!");
         }
-        System.out.println(followerUser);
         if(followerUser.getFollowing().contains(toFollowUsername)){
             throw new IllegalStateException("You already follow this user!");
         }

@@ -50,11 +50,11 @@ public class UserController {
     //get all users
     @GetMapping(
         produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllUsers(){
-        ArrayList<User> users = userService.getAllUsers();
+    public ResponseEntity<?> getAllPublicUsers(){
+        ArrayList<User> users = userService.getAllPublicUsers();
         if(users.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); 
-        return new ResponseEntity<ArrayList<User>>(userService.getAllUsers(), HttpStatus.OK);
+        return new ResponseEntity<ArrayList<User>>(userService.getAllPublicUsers(), HttpStatus.OK);
     }
 
     //post new user and saves user

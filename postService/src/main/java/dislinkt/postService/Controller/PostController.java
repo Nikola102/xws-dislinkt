@@ -3,6 +3,7 @@ package dislinkt.postService.Controller;
 import org.springframework.http.MediaType;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import dislinkt.postService.Model.Comment;
 import dislinkt.postService.Model.Post;
 import dislinkt.postService.Service.PostService;
 
@@ -48,11 +51,11 @@ public class PostController {
     //get all posts
     @GetMapping(
         produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllPosts(){
-        ArrayList<Post> posts = postService.getAllPosts();
+    public ResponseEntity<?> getAllPublicUserPosts(){
+        ArrayList<Post> posts = postService.getAllPublicUserPosts();
         if(posts.isEmpty())
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); 
-        return new ResponseEntity<ArrayList<Post>>(postService.getAllPosts(), HttpStatus.OK);
+        return new ResponseEntity<ArrayList<Post>>(postService.getAllPublicUserPosts(), HttpStatus.OK);
     }
 
     //get all posts by userId
@@ -114,6 +117,36 @@ public class PostController {
         }
     }
 
+    @PutMapping(path = "/like",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> likePost(@RequestBody Map<String, String> likeRequest){
+        try{
+            return new ResponseEntity<Post>(postService.likePost(likeRequest.get("userId"), likeRequest.get("postId")), HttpStatus.OK);
+        } catch (IllegalStateException e){
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
+    @PutMapping(path = "/dislike",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> dislikePost(@RequestBody Map<String, String> dislikeRequest){
+        try{
+            return new ResponseEntity<Post>(postService.dislikePost(dislikeRequest.get("userId"), dislikeRequest.get("postId")), HttpStatus.OK);
+        } catch (IllegalStateException e){
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 
+    @PutMapping(path = "/{postId}/comment",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> commentPost(@PathVariable String postId, @RequestBody Comment commentRequest){
+        try{
+            return new ResponseEntity<Post>(postService.commentPost(commentRequest, postId), HttpStatus.OK);
+        } catch (IllegalStateException e){
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
