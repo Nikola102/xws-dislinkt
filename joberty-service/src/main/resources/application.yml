@@ -1,6 +1,6 @@
 spring:
     application:
-        name: userService 
+        name: jobertyService 
     data:
         mongodb: 
             authentication-database: admin 
@@ -10,4 +10,4 @@ spring:
             host: localhost
             port: 27017 
 server:
-    port: 8088
+    port: 8089
