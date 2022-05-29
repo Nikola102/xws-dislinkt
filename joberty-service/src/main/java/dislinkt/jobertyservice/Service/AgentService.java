@@ -21,12 +21,25 @@ public class AgentService {
         return agentRepo.findByUsername(username);
     }
 
+    public Agent findByAgentId(String agentId) {
+        return agentRepo.findByAgentId(agentId);
+    }
+
     public ArrayList<Agent> findByUsernameContaining(String usernamePart) {
         return agentRepo.findByUsernameContaining(usernamePart);
     }
 
     public void deleteAllAgents() {
         agentRepo.deleteAll();
+    }
+
+    public Boolean deleteAgentById(String agentId) {
+        Agent agent = agentRepo.findByAgentId(agentId);
+        if (agent == null)
+            throw new IllegalArgumentException("Agent not found");
+        agentRepo.delete(agent);
+        return true;
+        
     }
 
     public void save(Agent agent) {
