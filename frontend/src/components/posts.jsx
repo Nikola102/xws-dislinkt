@@ -33,7 +33,7 @@ const Posts = (props) => {
         <div className={"post"} key={post.id}>
           <p>{user.name + " " + user.lastname}</p>
           <p>{post.content}</p>
-          <div>{post.likes} Likes</div>
+          <div className={"likes"}>{post.likes} Likes</div>
           <ButtonToolbar aria-label="Toolbar with button groups">
             <ButtonGroup className="mb-2">
               <Button variant="outline-secondary">Like</Button>
@@ -51,6 +51,7 @@ const Posts = (props) => {
             </ButtonGroup>
           </ButtonToolbar>
           <div
+            className="comment-section"
             ref={(el) => (refs.current[index] = el)}
             style={{ display: "none" }}
           >
@@ -67,7 +68,7 @@ const Posts = (props) => {
               </Button>
             </Form>
             {post.comments.map((comment) => (
-              <p key={comment.userId}>
+              <p className={"comment"} key={comment.userId}>
                 {comment.userId + " " + comment.content}
               </p>
             ))}

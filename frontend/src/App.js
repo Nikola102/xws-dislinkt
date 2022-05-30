@@ -66,7 +66,7 @@ class App extends Component {
   }
   render() {
     return (
-      <div>
+      <div className={"background"}>
         <Router>
           <Routes>
             <Route path="/home" element={<Layout />}>

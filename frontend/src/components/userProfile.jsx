@@ -16,9 +16,14 @@ const UserProfile = (props) => {
     }
   }, [props.posts, props.user, user.posts]);
   return (
-    <div>
-      <Image rounded src="user.png" width="300" height="300" />
-      <Posts posts={posts} user={user} />
+    <div className={"profile-page"}>
+      <div className={"profile-page-image"}>
+        <Image rounded src="user.png" width="200" height="200" align="left" />
+      </div>
+      <div className={"profile-page-body"}>
+        <h3 className={"profile-h3"}>Posts</h3>
+        <Posts posts={posts} user={user} />
+      </div>
     </div>
   );
 };

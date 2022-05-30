@@ -17,7 +17,7 @@ const Register = () => {
   let [interests, setInterests] = useState("");
 
   return (
-    <div>
+    <div className={"register"}>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Label>Name</Form.Label>

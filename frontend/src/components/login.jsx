@@ -13,7 +13,7 @@ const Login = () => {
     navigate("/feed", { replace: true });
   }
   return (
-    <div>
+    <div className="login">
       <Form>
         <Form.Group className="mb-3" controlId="formBasicUsername">
           <Form.Label>Username</Form.Label>
