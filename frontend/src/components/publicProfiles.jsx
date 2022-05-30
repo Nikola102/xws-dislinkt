@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Container from "react-bootstrap/Container";
 
 const PublicProfiles = (props) => {
   let [profiles, setProfiles] = useState([]);
@@ -11,12 +10,12 @@ const PublicProfiles = (props) => {
   return (
     <div>
       {profiles.map((profile) => (
-        <Container>
+        <div key={profile.id}>
           <img alt={profile.username} />
-          <Link to={profile.username}>
+          <Link to={"/" + profile.username}>
             {profile.name + " " + profile.lastname}
           </Link>
-        </Container>
+        </div>
       ))}
     </div>
   );

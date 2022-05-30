@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Container from "react-bootstrap/Container";
+import React, { useEffect, useState, useRef } from "react";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import ButtonToolbar from "react-bootstrap/ButtonToolbar";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 const Posts = (props) => {
   let [posts, setPosts] = useState([]);
   let [user, setUser] = useState({ posts: [] });
+  let [comment, setComment] = useState("");
+  let refs = useRef([]);
+
   useEffect(() => {
     setUser(props.user);
     for (let i = 0; i < user.posts.length; i++) {
@@ -13,19 +19,59 @@ const Posts = (props) => {
         }
       }
     }
+    for (let i = 0; i < posts.length; i++) {
+      let myRef = React.createRef();
+      refs = [...refs, myRef];
+    }
   }, [props.posts, props.user, user.posts]);
+  function ShowComments(index) {
+    refs.current[index].style = { display: "none" };
+  }
   return (
-    <div>
-      {posts.map((post) => (
-        <div>
-          <Container>
-            <h1>{user.name + " " + user.lastname}</h1>
-            <p>{post.content}</p>
-            <div>{post.likes} Likes</div>
+    <div className={"post-list"}>
+      {posts.map((post, index) => (
+        <div className={"post"} key={post.id}>
+          <p>{user.name + " " + user.lastname}</p>
+          <p>{post.content}</p>
+          <div>{post.likes} Likes</div>
+          <ButtonToolbar aria-label="Toolbar with button groups">
+            <ButtonGroup className="mb-2">
+              <Button variant="outline-secondary">Like</Button>
+            </ButtonGroup>
+            <ButtonGroup className="mb-2">
+              <Button
+                variant="outline-secondary"
+                onClick={() => ShowComments(index)}
+              >
+                Comment
+              </Button>
+            </ButtonGroup>
+            <ButtonGroup className="mb-2">
+              <Button variant="outline-secondary">Share</Button>
+            </ButtonGroup>
+          </ButtonToolbar>
+          <div
+            ref={(el) => (refs.current[index] = el)}
+            style={{ display: "none" }}
+          >
+            <Form>
+              <Form.Group className="mb-3" controlId="formBasicComment">
+                <Form.Control
+                  type="text"
+                  placeholder="Add a comment..."
+                  onChange={(e) => setComment(e.target.value)}
+                />
+              </Form.Group>
+              <Button variant="outline-primary" type="submit">
+                Post Comment
+              </Button>
+            </Form>
             {post.comments.map((comment) => (
-              <p>{comment.userId + " " + comment.content}</p>
+              <p key={comment.userId}>
+                {comment.userId + " " + comment.content}
+              </p>
             ))}
-          </Container>
+          </div>
         </div>
       ))}
     </div>

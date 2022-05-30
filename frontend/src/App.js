@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/login";
 import Register from "./components/register";
 import Layout from "./components/layout";
-import Posts from "./components/posts";
+import UserProfile from "./components/userProfile";
+import Feed from "./components/feed";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -68,20 +69,24 @@ class App extends Component {
       <div>
         <Router>
           <Routes>
-            <Route path="/" element={<Layout />}>
+            <Route path="/home" element={<Layout />}>
               <Route
                 index
                 element={<PublicProfiles profiles={this.state.profiles} />}
               />
-              <Route path="login" element={<Login />} />
-              <Route path="register" element={<Register />} />
-              {this.state.profiles.map((profile) => (
-                <Route
-                  path={profile.username}
-                  element={<Posts posts={this.state.posts} user={profile} />}
-                />
-              ))}
             </Route>
+            {this.state.profiles.map((profile) => (
+              <Route
+                key={profile.id}
+                path={profile.username}
+                element={
+                  <UserProfile posts={this.state.posts} user={profile} />
+                }
+              />
+            ))}
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+            <Route path="feed" element={<Feed />} />
           </Routes>
         </Router>
       </div>
