@@ -8,26 +8,30 @@ const PublicProfiles = (props) => {
   useEffect(() => {
     setProfiles(props.profiles);
   }, [props.profiles]);
-  return (
-    <div className={"profile-list"}>
-      <h3 className={"profile-list-h3"}>People</h3>
-      {profiles.map((profile) => (
-        <div key={profile.id} className={"public-profile"}>
-          <Image
-            className={"profile-image"}
-            rounded
-            src="user.png"
-            width="60"
-            height="60"
-            align="left"
-          />
-          <Link className={"profile-link"} to={"/" + profile.username}>
-            {profile.name + " " + profile.lastname}
-          </Link>
-        </div>
-      ))}
-    </div>
-  );
+  if (profiles.length != 0) {
+    return (
+      <div className={"profile-list"}>
+        <h3 className={"profile-list-h3"}>People</h3>
+        {profiles.map((profile) => (
+          <div key={profile.id} className={"public-profile"}>
+            <Image
+              className={"profile-image"}
+              rounded
+              src="user.png"
+              width="60"
+              height="60"
+              align="left"
+            />
+            <Link className={"profile-link"} to={"/" + profile.username}>
+              {profile.name + " " + profile.lastname}
+            </Link>
+          </div>
+        ))}
+      </div>
+    );
+  } else {
+    return;
+  }
 };
 
 export default PublicProfiles;

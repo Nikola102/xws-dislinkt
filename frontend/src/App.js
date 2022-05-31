@@ -6,6 +6,7 @@ import Register from "./components/register";
 import Layout from "./components/layout";
 import UserProfile from "./components/userProfile";
 import Feed from "./components/feed";
+import Search from "./components/search";
 class App extends Component {
   constructor(props) {
     super(props);
@@ -20,15 +21,15 @@ class App extends Component {
         },
         {
           id: 2,
-          name: "Marko",
-          lastname: "Markovic",
+          name: "Darko",
+          lastname: "Darkovic",
           posts: [4, 5, 6],
           username: "markisa98",
         },
         {
           id: 3,
-          name: "Marko",
-          lastname: "Markovic",
+          name: "Zarko",
+          lastname: "Zarkovic",
           posts: [7, 8, 9],
           username: "markisa97",
         },
@@ -61,6 +62,33 @@ class App extends Component {
             { userId: 3, content: "Me too my g!" },
           ],
         },
+        {
+          id: 4,
+          content: "I'm feeling good today!",
+          likes: 51,
+          comments: [
+            { userId: 1, content: "Glad to hear that!" },
+            { userId: 3, content: "Me too my g!" },
+          ],
+        },
+        {
+          id: 5,
+          content: "I'm feeling good today!",
+          likes: 51,
+          comments: [
+            { userId: 1, content: "Glad to hear that!" },
+            { userId: 3, content: "Me too my g!" },
+          ],
+        },
+        {
+          id: 6,
+          content: "I'm feeling good today!",
+          likes: 51,
+          comments: [
+            { userId: 1, content: "Glad to hear that!" },
+            { userId: 3, content: "Me too my g!" },
+          ],
+        },
       ],
     };
   }
@@ -86,7 +114,13 @@ class App extends Component {
             ))}
             <Route path="login" element={<Login />} />
             <Route path="register" element={<Register />} />
-            <Route path="feed" element={<Feed />} />
+            <Route
+              path="feed"
+              element={
+                <Feed user={this.state.profiles[0]} posts={this.state.posts} />
+              }
+            />
+            <Route path="search" element={<Search />} />
           </Routes>
         </Router>
       </div>
