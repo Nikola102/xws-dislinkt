@@ -13,16 +13,11 @@ const FeedPosts = (props) => {
   useEffect(() => {
     setUser(props.user);
     for (let i = 0; i < props.posts.length; i++) {
-      let flag = false;
-      for (let j = 0; j < props.user.posts.length; j++) {
-        if (props.posts[i].id == props.user.posts[j]) {
-          flag = true;
-        }
-      }
-      if (!flag) {
+      if (props.posts[i].username !== props.user.username) {
         setPosts((posts) => [...posts, props.posts[i]]);
       }
     }
+
     for (let i = 0; i < posts.length; i++) {
       let myRef = React.createRef();
       refs.current = [...refs.current, myRef];
@@ -35,9 +30,9 @@ const FeedPosts = (props) => {
     <div className={"post-list"}>
       {posts.map((post, index) => (
         <div className={"post"} key={post.id}>
-          <p>{user.name + " " + user.lastname}</p>
-          <p>{post.content}</p>
-          <div className={"likes"}>{post.likes} Likes</div>
+          <a href={post.username}>{post.username}</a>
+          <p>{post.description}</p>
+          <div className={"likes"}>{post.likedUserIds.length} Likes</div>
           <ButtonToolbar aria-label="Toolbar with button groups">
             <ButtonGroup className="mb-2">
               <Button variant="outline-secondary">Like</Button>
@@ -73,7 +68,7 @@ const FeedPosts = (props) => {
             </Form>
             {post.comments.map((comment) => (
               <p className={"comment"} key={comment.userId}>
-                {comment.userId + " " + comment.content}
+                {comment.userId + " " + comment.text}
               </p>
             ))}
           </div>

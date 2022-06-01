@@ -5,23 +5,30 @@ import Button from "react-bootstrap/Button";
 
 const Posts = (props) => {
   let [posts, setPosts] = useState([]);
-  let [user, setUser] = useState({ posts: [] });
+  let [user, setUser] = useState({});
   let refs = useRef([]);
+  const getPosts = (username) => {
+    fetch("http://localhost:8082/post/" + username, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setPosts(data);
+      });
+  };
 
   useEffect(() => {
     setUser(props.user);
-    for (let i = 0; i < user.posts.length; i++) {
-      for (let j = 0; j < props.posts.length; j++) {
-        if (user.posts[i] == props.posts[j].id) {
-          setPosts((posts) => [...posts, props.posts[j]]);
-        }
-      }
-    }
+    getPosts(props.user.username);
     for (let i = 0; i < posts.length; i++) {
       let myRef = React.createRef();
       refs = [...refs, myRef];
     }
-  }, [props.posts, props.user, user.posts]);
+  }, [props.user]);
   function ShowComments(index) {
     refs.current[index].style = { display: "none" };
   }
@@ -29,9 +36,9 @@ const Posts = (props) => {
     <div className={"post-list-profile"}>
       {posts.map((post, index) => (
         <div className={"post-profile"} key={post.id}>
-          <p>{user.name + " " + user.lastname}</p>
-          <p>{post.content}</p>
-          <div className={"likes"}>{post.likes} Likes</div>
+          <p>{user.name + " " + user.surname}</p>
+          <p>{post.description}</p>
+          <div className={"likes"}>{post.likedUserIds.length} Likes</div>
           <ButtonToolbar aria-label="Toolbar with button groups">
             <ButtonGroup className="mb-2">
               <Button variant="outline-secondary">Like</Button>
@@ -55,7 +62,7 @@ const Posts = (props) => {
           >
             {post.comments.map((comment) => (
               <p className={"comment"} key={comment.userId}>
-                {comment.userId + " " + comment.content}
+                {comment.userId + " " + comment.text}
               </p>
             ))}
           </div>

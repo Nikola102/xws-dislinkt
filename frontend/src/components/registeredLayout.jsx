@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import { FormControl } from "react-bootstrap";
 
 const RegisteredLayout = (props) => {
+  const username = sessionStorage.getItem("username");
   let [user, setUser] = useState({});
   let [queryString, setQueryString] = useState("");
   let navigate = useNavigate();
@@ -30,7 +31,7 @@ const RegisteredLayout = (props) => {
               variant="secondary"
               id="search-btn"
               onClick={() => {
-                navigate("/search?name=" + queryString);
+                navigate("/search?username=" + queryString);
               }}
             >
               Search
@@ -39,9 +40,18 @@ const RegisteredLayout = (props) => {
         </Nav>
         <Nav className="justify-content right-margin">
           <Nav.Link href="feed">Home</Nav.Link>
-          <Nav.Link href={user.username}>Profile</Nav.Link>
+          <Nav.Link href={username}>Profile</Nav.Link>
           <Nav.Link href="jobs">Jobs</Nav.Link>
+          <Nav.Link
+            href="home"
+            onClick={() => {
+              sessionStorage.clear();
+            }}
+          >
+            Logout
+          </Nav.Link>
         </Nav>
+        <Navbar.Text>Signed in as: {username}</Navbar.Text>
       </Navbar>
       <Outlet />
     </div>

@@ -1,20 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 const EditProfile = () => {
-  let [username, setUsername] = useState("");
-  let [password, setPassword] = useState("");
-  let [name, setName] = useState("");
-  let [surname, setSurname] = useState("");
-  let [email, setEmail] = useState("");
-  let [phone, setPhone] = useState("");
-  let [gender, setGender] = useState("");
-  let [bio, setBio] = useState("");
-  let [experience, setExperience] = useState("");
-  let [education, setEducation] = useState("");
-  let [skills, setSkills] = useState("");
-  let [interests, setInterests] = useState("");
+  let userToken = sessionStorage.getItem("username");
+  let [loggedInUser, setLoggedInUser] = useState({});
+  let [editedUser, setEditedUser] = useState({
+    username: "",
+    password: "",
+    name: "",
+    surname: "",
+    email: "",
+    phone: "",
+    gender: "",
+    bio: "",
+    experience: "",
+    education: "",
+    skills: "",
+    interests: "",
+  });
+  function getLoggedInUser() {
+    fetch("http://localhost:8088/user/" + userToken, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setLoggedInUser(data);
+      });
+  }
+  useEffect(() => {
+    getLoggedInUser();
+  }, []);
+  const handleChange = (item_id, e) => {
+    let updatedValue = {};
+    updatedValue[item_id] = e.target.value;
+    setEditedUser((editedUser) => ({ ...editedUser, ...updatedValue }));
+  };
   return (
     <div>
       <Form>
@@ -23,7 +48,8 @@ const EditProfile = () => {
           <Form.Control
             type="text"
             placeholder="Enter Name"
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => handleChange("name", e)}
+            defaultValue={loggedInUser.name}
           />
         </Form.Group>
 
@@ -32,7 +58,8 @@ const EditProfile = () => {
           <Form.Control
             type="text"
             placeholder="Enter Surname"
-            onChange={(e) => setSurname(e.target.value)}
+            onChange={(e) => handleChange("surname", e)}
+            defaultValue={loggedInUser.surname}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicUsername">
@@ -40,15 +67,17 @@ const EditProfile = () => {
           <Form.Control
             type="text"
             placeholder="Enter username"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => handleChange("username", e)}
+            defaultValue={loggedInUser.username}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            type="password"
+            type="text"
             placeholder="Enter Password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => handleChange("password", e)}
+            defaultValue={loggedInUser.password}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -56,7 +85,8 @@ const EditProfile = () => {
           <Form.Control
             type="email"
             placeholder="Enter Email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => handleChange("email", e)}
+            defaultValue={loggedInUser.email}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPhone">
@@ -64,12 +94,16 @@ const EditProfile = () => {
           <Form.Control
             type="text"
             placeholder="Enter Phone"
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => handleChange("phone", e)}
+            defaultValue={loggedInUser.phone}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicGender">
           <Form.Label>Gender</Form.Label>
-          <Form.Select onChange={(e) => setGender(e.target.value)}>
+          <Form.Select
+            onChange={(e) => handleChange("gender", e)}
+            defaultValue={loggedInUser.gender}
+          >
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
@@ -80,7 +114,8 @@ const EditProfile = () => {
           <Form.Control
             type="text"
             placeholder="Enter Bio"
-            onChange={(e) => setBio(e.target.value)}
+            onChange={(e) => handleChange("bio", e)}
+            defaultValue={loggedInUser.bio}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicExperience">
@@ -88,7 +123,8 @@ const EditProfile = () => {
           <Form.Control
             type="text"
             placeholder="Enter Experience"
-            onChange={(e) => setExperience(e.target.value)}
+            onChange={(e) => handleChange("experience", e)}
+            defaultValue={loggedInUser.experience}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEducation">
@@ -96,7 +132,8 @@ const EditProfile = () => {
           <Form.Control
             type="text"
             placeholder="Enter Education"
-            onChange={(e) => setEducation(e.target.value)}
+            onChange={(e) => handleChange("education", e)}
+            defaultValue={loggedInUser.education}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicSkills">
@@ -104,7 +141,8 @@ const EditProfile = () => {
           <Form.Control
             type="text"
             placeholder="Enter Skills"
-            onChange={(e) => setSkills(e.target.value)}
+            onChange={(e) => handleChange("skills", e)}
+            defaultValue={loggedInUser.skills}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicInterests">
@@ -112,7 +150,8 @@ const EditProfile = () => {
           <Form.Control
             type="text"
             placeholder="Enter Interests"
-            onChange={(e) => setInterests(e.target.value)}
+            onChange={(e) => handleChange("interests", e)}
+            defaultValue={loggedInUser.interests}
           />
         </Form.Group>
         <Button variant="outline-primary" type="submit">

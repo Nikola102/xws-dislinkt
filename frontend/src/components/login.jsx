@@ -3,13 +3,28 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ handler }) => {
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
   let navigate = useNavigate();
   async function handleSubmit(event) {
-    sessionStorage.setItem("username", username);
     event.preventDefault();
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({ username: username, password: password }),
+    };
+    const response = await fetch(
+      "http://localhost:8088/user/login",
+      requestOptions
+    );
+    const body = await response.json();
+    handler(body);
+    sessionStorage.setItem("username", username);
+    sessionStorage.setItem("userId", body.id);
     navigate("/feed", { replace: true });
   }
   return (

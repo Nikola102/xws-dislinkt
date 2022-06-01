@@ -8,7 +8,8 @@ const PublicProfiles = (props) => {
   useEffect(() => {
     setProfiles(props.profiles);
   }, [props.profiles]);
-  if (profiles.length != 0) {
+
+  if (profiles.length !== 0) {
     return (
       <div className={"profile-list"}>
         <h3 className={"profile-list-h3"}>People</h3>
@@ -23,7 +24,7 @@ const PublicProfiles = (props) => {
               align="left"
             />
             <Link className={"profile-link"} to={"/" + profile.username}>
-              {profile.name + " " + profile.lastname}
+              {profile.name + " " + profile.surname}
             </Link>
           </div>
         ))}
