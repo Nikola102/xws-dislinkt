@@ -103,8 +103,13 @@
   margin-left: 25%;
 }
 .feed-post {
-  margin-left: 4.1%;
-  width: 95.9%;
+  width: 96%;
+  margin-left: 4%;
+  margin-bottom: 5%;
+  border-color: rgb(245, 245, 245);
+  border-style: solid;
+  background-color: rgb(255, 255, 255);
+  padding-top: 2%;
 }
 .profile-view-row {
   margin-top: 19%;
@@ -114,4 +119,21 @@
   width: 100px;
   font-size: 16px;
   text-align: center;
+}
+#button-post {
+  width: 100%;
+}
+#image-post {
+  width: 100%;
+}
+.text-and-image-post {
+  border-color: rgb(245, 245, 245);
+  border-style: solid;
+}
+.text-post {
+  border-radius: 0 !important;
+  border-style: none !important;
+}
+.form-control:focus {
+  box-shadow: none;
 }

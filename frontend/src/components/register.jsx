@@ -1,20 +1,62 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
 
-const Register = () => {
-  let [username, setUsername] = useState("");
-  let [password, setPassword] = useState("");
-  let [name, setName] = useState("");
-  let [surname, setSurname] = useState("");
-  let [email, setEmail] = useState("");
-  let [phone, setPhone] = useState("");
-  let [gender, setGender] = useState("");
-  let [bio, setBio] = useState("");
-  let [experience, setExperience] = useState("");
-  let [education, setEducation] = useState("");
-  let [skills, setSkills] = useState("");
-  let [interests, setInterests] = useState("");
+const Register = ({ handler }) => {
+  let [registerUser, setRegisterUser] = useState({
+    username: "",
+    password: "",
+    name: "",
+    surname: "",
+    email: "",
+    phone: "",
+    gender: "",
+    bio: "",
+    experience: "",
+    education: "",
+    skills: "",
+    interests: "",
+  });
+  let navigate = useNavigate();
+  const handleChange = (item_id, e) => {
+    let updatedValue = {};
+    updatedValue[item_id] = e.target.value;
+    setRegisterUser((registerUser) => ({ ...registerUser, ...updatedValue }));
+  };
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        username: registerUser.username,
+        password: registerUser.password,
+        name: registerUser.name,
+        surname: registerUser.surname,
+        email: registerUser.email,
+        phone: registerUser.phone,
+        gender: registerUser.gender,
+        bio: registerUser.bio,
+        experience: registerUser.experience,
+        education: registerUser.education,
+        skills: registerUser.skills,
+        interests: registerUser.interests,
+        isPrivate: false,
+        following: [],
+        followRequests: [],
+      }),
+    };
+    const response = await fetch("http://localhost:8088/user", requestOptions);
+    const body = await response.json();
+    handler(body);
+    sessionStorage.setItem("username", registerUser.username);
+    sessionStorage.setItem("userId", body.id);
+    navigate("/feed", { replace: true });
+  }
 
   return (
     <div className={"register"}>
@@ -24,7 +66,7 @@ const Register = () => {
           <Form.Control
             type="text"
             placeholder="Enter Name"
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => handleChange("name", e)}
           />
         </Form.Group>
 
@@ -33,7 +75,7 @@ const Register = () => {
           <Form.Control
             type="text"
             placeholder="Enter Surname"
-            onChange={(e) => setSurname(e.target.value)}
+            onChange={(e) => handleChange("surname", e)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicUsername">
@@ -41,7 +83,7 @@ const Register = () => {
           <Form.Control
             type="text"
             placeholder="Enter username"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => handleChange("username", e)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -49,7 +91,7 @@ const Register = () => {
           <Form.Control
             type="password"
             placeholder="Enter Password"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => handleChange("password", e)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -57,7 +99,7 @@ const Register = () => {
           <Form.Control
             type="email"
             placeholder="Enter Email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => handleChange("email", e)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPhone">
@@ -65,12 +107,12 @@ const Register = () => {
           <Form.Control
             type="text"
             placeholder="Enter Phone"
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => handleChange("phone", e)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicGender">
           <Form.Label>Gender</Form.Label>
-          <Form.Select onChange={(e) => setGender(e.target.value)}>
+          <Form.Select onChange={(e) => handleChange("gender", e)}>
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
@@ -81,7 +123,7 @@ const Register = () => {
           <Form.Control
             type="text"
             placeholder="Enter Bio"
-            onChange={(e) => setBio(e.target.value)}
+            onChange={(e) => handleChange("bio", e)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicExperience">
@@ -89,7 +131,7 @@ const Register = () => {
           <Form.Control
             type="text"
             placeholder="Enter Experience"
-            onChange={(e) => setExperience(e.target.value)}
+            onChange={(e) => handleChange("experience", e)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEducation">
@@ -97,7 +139,7 @@ const Register = () => {
           <Form.Control
             type="text"
             placeholder="Enter Education"
-            onChange={(e) => setEducation(e.target.value)}
+            onChange={(e) => handleChange("education", e)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicSkills">
@@ -105,7 +147,7 @@ const Register = () => {
           <Form.Control
             type="text"
             placeholder="Enter Skills"
-            onChange={(e) => setSkills(e.target.value)}
+            onChange={(e) => handleChange("skills", e)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicInterests">
@@ -113,15 +155,13 @@ const Register = () => {
           <Form.Control
             type="text"
             placeholder="Enter Interests"
-            onChange={(e) => setInterests(e.target.value)}
+            onChange={(e) => handleChange("interests", e)}
           />
         </Form.Group>
         <Button
           variant="outline-primary"
           type="submit"
-          onClick={() => {
-            alert(username + " " + password);
-          }}
+          onClick={(e) => handleSubmit(e)}
         >
           Register
         </Button>

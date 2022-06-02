@@ -8,30 +8,27 @@ import UserProfile from "./components/userProfile";
 import Feed from "./components/feed";
 import Search from "./components/search";
 import EditProfile from "./components/editProfile";
+import Home from "./components/home";
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      profiles: [],
-      posts: [],
-      user: {},
-      searchUsers: [],
-    };
-    this.userHandler = (val) => {
-      console.log(this.state.user);
-      this.setState({
-        user: val,
-      });
-      console.log(this.state.user);
-    };
-    this.searchHandler = (val) => {
-      console.log(val);
-      this.setState({
-        searchUsers: val,
-      });
-    };
-  }
-  componentDidMount() {
+  getUsers = this.getUsers.bind(this);
+  getPosts = this.getPosts.bind(this);
+  state = {
+    profiles: [],
+    posts: [],
+    user: {},
+    searchUsers: [],
+  };
+  userHandler = (val) => {
+    this.setState({
+      user: val,
+    });
+  };
+  searchHandler = (val) => {
+    this.setState({
+      searchUsers: val,
+    });
+  };
+  getUsers() {
     fetch("http://localhost:8088/user/", {
       headers: {
         "Access-Control-Allow-Origin": "*",
@@ -45,6 +42,8 @@ class App extends Component {
           profiles: data,
         });
       });
+  }
+  getPosts() {
     fetch("http://localhost:8082/post/", {
       headers: {
         "Access-Control-Allow-Origin": "*",
@@ -59,15 +58,16 @@ class App extends Component {
         });
       });
   }
+  componentDidMount() {
+    this.getUsers();
+    this.getPosts();
+  }
   render() {
     return (
       <div className={"background"}>
         <Router>
           <Routes>
-            <Route
-              path="/home"
-              element={<Layout handler={this.searchHandler} />}
-            >
+            <Route path="/home" element={<Home handler={this.searchHandler} />}>
               <Route
                 index
                 element={<PublicProfiles profiles={this.state.searchUsers} />}
@@ -77,17 +77,32 @@ class App extends Component {
               <Route
                 key={profile.id}
                 path={profile.username}
-                element={<UserProfile user={profile} />}
+                element={
+                  <UserProfile
+                    user={profile}
+                    refreshPage={this.getPosts}
+                    handler={this.searchHandler}
+                  />
+                }
               />
             ))}
             <Route
               path="login"
               element={<Login handler={this.userHandler} />}
             />
-            <Route path="register" element={<Register />} />
+            <Route
+              path="register"
+              element={<Register handler={this.userHandler} />}
+            />
             <Route
               path="feed"
-              element={<Feed posts={this.state.posts} user={this.state.user} />}
+              element={
+                <Feed
+                  posts={this.state.posts}
+                  user={this.state.user}
+                  refreshPage={this.getPosts}
+                />
+              }
             />
             <Route path="search" element={<Search />} />
             <Route

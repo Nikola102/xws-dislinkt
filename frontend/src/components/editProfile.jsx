@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useNavigate } from "react-router-dom";
 
-const EditProfile = () => {
-  let userToken = sessionStorage.getItem("username");
-  let [loggedInUser, setLoggedInUser] = useState({});
+const EditProfile = ({ user }) => {
+  let navigate = useNavigate();
   let [editedUser, setEditedUser] = useState({
     username: "",
     password: "",
@@ -19,27 +19,62 @@ const EditProfile = () => {
     skills: "",
     interests: "",
   });
-  function getLoggedInUser() {
-    fetch("http://localhost:8088/user/" + userToken, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setLoggedInUser(data);
-      });
-  }
   useEffect(() => {
-    getLoggedInUser();
+    setEditedUser({
+      username: user.username,
+      password: user.password,
+      name: user.name,
+      surname: user.surname,
+      email: user.email,
+      phone: user.phone,
+      gender: user.gender,
+      bio: user.bio,
+      experience: user.experience,
+      education: user.education,
+      skills: user.skills,
+      interests: user.interests,
+    });
   }, []);
   const handleChange = (item_id, e) => {
     let updatedValue = {};
     updatedValue[item_id] = e.target.value;
     setEditedUser((editedUser) => ({ ...editedUser, ...updatedValue }));
   };
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify({
+        id: user.id,
+        username: editedUser.username,
+        password: editedUser.password,
+        name: editedUser.name,
+        surname: editedUser.surname,
+        email: editedUser.email,
+        phone: editedUser.phone,
+        gender: editedUser.gender,
+        bio: editedUser.bio,
+        experience: editedUser.experience,
+        education: editedUser.education,
+        skills: editedUser.skills,
+        interests: editedUser.interests,
+        isPrivate: user.isPrivate,
+        following: user.following,
+        followRequests: user.followRequests,
+      }),
+    };
+    const response = await fetch("http://localhost:8088/user", requestOptions);
+    const body = await response.json();
+    alert("Saved changes successfuly!");
+    sessionStorage.clear();
+    sessionStorage.setItem("username", editedUser.username);
+    sessionStorage.setItem("userId", user.id);
+    navigate("/feed", { replace: true });
+  }
   return (
     <div>
       <Form>
@@ -49,7 +84,7 @@ const EditProfile = () => {
             type="text"
             placeholder="Enter Name"
             onChange={(e) => handleChange("name", e)}
-            defaultValue={loggedInUser.name}
+            defaultValue={user.name}
           />
         </Form.Group>
 
@@ -59,7 +94,7 @@ const EditProfile = () => {
             type="text"
             placeholder="Enter Surname"
             onChange={(e) => handleChange("surname", e)}
-            defaultValue={loggedInUser.surname}
+            defaultValue={user.surname}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicUsername">
@@ -68,7 +103,7 @@ const EditProfile = () => {
             type="text"
             placeholder="Enter username"
             onChange={(e) => handleChange("username", e)}
-            defaultValue={loggedInUser.username}
+            defaultValue={user.username}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -77,7 +112,7 @@ const EditProfile = () => {
             type="text"
             placeholder="Enter Password"
             onChange={(e) => handleChange("password", e)}
-            defaultValue={loggedInUser.password}
+            defaultValue={user.password}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -86,7 +121,7 @@ const EditProfile = () => {
             type="email"
             placeholder="Enter Email"
             onChange={(e) => handleChange("email", e)}
-            defaultValue={loggedInUser.email}
+            defaultValue={user.email}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPhone">
@@ -95,14 +130,14 @@ const EditProfile = () => {
             type="text"
             placeholder="Enter Phone"
             onChange={(e) => handleChange("phone", e)}
-            defaultValue={loggedInUser.phone}
+            defaultValue={user.phone}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicGender">
           <Form.Label>Gender</Form.Label>
           <Form.Select
             onChange={(e) => handleChange("gender", e)}
-            defaultValue={loggedInUser.gender}
+            defaultValue={user.gender}
           >
             <option value="male">Male</option>
             <option value="female">Female</option>
@@ -115,7 +150,7 @@ const EditProfile = () => {
             type="text"
             placeholder="Enter Bio"
             onChange={(e) => handleChange("bio", e)}
-            defaultValue={loggedInUser.bio}
+            defaultValue={user.bio}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicExperience">
@@ -124,7 +159,7 @@ const EditProfile = () => {
             type="text"
             placeholder="Enter Experience"
             onChange={(e) => handleChange("experience", e)}
-            defaultValue={loggedInUser.experience}
+            defaultValue={user.experience}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEducation">
@@ -133,7 +168,7 @@ const EditProfile = () => {
             type="text"
             placeholder="Enter Education"
             onChange={(e) => handleChange("education", e)}
-            defaultValue={loggedInUser.education}
+            defaultValue={user.education}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicSkills">
@@ -142,7 +177,7 @@ const EditProfile = () => {
             type="text"
             placeholder="Enter Skills"
             onChange={(e) => handleChange("skills", e)}
-            defaultValue={loggedInUser.skills}
+            defaultValue={user.skills}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicInterests">
@@ -151,10 +186,14 @@ const EditProfile = () => {
             type="text"
             placeholder="Enter Interests"
             onChange={(e) => handleChange("interests", e)}
-            defaultValue={loggedInUser.interests}
+            defaultValue={user.interests}
           />
         </Form.Group>
-        <Button variant="outline-primary" type="submit">
+        <Button
+          variant="outline-primary"
+          type="submit"
+          onClick={(e) => handleSubmit(e)}
+        >
           Save Changes
         </Button>
       </Form>

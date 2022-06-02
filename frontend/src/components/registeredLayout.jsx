@@ -39,9 +39,27 @@ const RegisteredLayout = (props) => {
           </InputGroup>
         </Nav>
         <Nav className="justify-content right-margin">
-          <Nav.Link href="feed">Home</Nav.Link>
-          <Nav.Link href={username}>Profile</Nav.Link>
-          <Nav.Link href="jobs">Jobs</Nav.Link>
+          <Nav.Link
+            onClick={() => {
+              navigate("/feed", { replace: true });
+            }}
+          >
+            Home
+          </Nav.Link>
+          <Nav.Link
+            onClick={() => {
+              navigate("/" + username, { replace: true });
+            }}
+          >
+            Profile
+          </Nav.Link>
+          <Nav.Link
+            onClick={() => {
+              navigate("/jobs", { replace: true });
+            }}
+          >
+            Jobs
+          </Nav.Link>
           <Nav.Link
             href="home"
             onClick={() => {

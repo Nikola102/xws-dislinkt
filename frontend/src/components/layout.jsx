@@ -8,7 +8,6 @@ import FormControl from "react-bootstrap/FormControl";
 
 const Layout = (props) => {
   let [search, setSearch] = useState("");
-  let [searchedUsers, setSearchedUsers] = useState([]);
 
   async function searchForUsers() {
     const response = await fetch(
@@ -20,8 +19,12 @@ const Layout = (props) => {
         },
       }
     );
-    const body = await response.json();
-    setSearchedUsers(await body);
+    if (response.ok) {
+      const body = await response.json();
+      props.handler(body);
+    } else {
+      props.handler([]);
+    }
   }
   return (
     <div>
@@ -36,10 +39,7 @@ const Layout = (props) => {
             <Button
               variant="secondary"
               id="search-btn"
-              onClick={async () => {
-                await searchForUsers();
-                props.handler(searchedUsers);
-              }}
+              onClick={searchForUsers}
             >
               Search
             </Button>

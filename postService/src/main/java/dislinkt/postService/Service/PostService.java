@@ -53,13 +53,28 @@ public class PostService {
 
     public Post likePost(String userId, String postId) {
         Post post = findByPostId(postId);
-        post.getLikedUserIds().add(userId);
+        if(!post.getLikedUserIds().contains(userId))
+        {
+            post.getLikedUserIds().add(userId);
+            post.getDislikedUserIds().remove(userId);
+        }
+            
+        else
+            post.getLikedUserIds().remove(userId);
+
         return postRepo.save(post);
     }
 
     public Post dislikePost(String userId, String postId) {
         Post post = findByPostId(postId);
-        post.getDislikedUserIds().add(userId);
+        if(!post.getDislikedUserIds().contains(userId))
+        {
+            post.getDislikedUserIds().add(userId);
+            post.getLikedUserIds().remove(userId);
+        }
+        else
+            post.getDislikedUserIds().remove(userId);
+        
         return postRepo.save(post);
     }
 
