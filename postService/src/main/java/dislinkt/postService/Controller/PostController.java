@@ -56,14 +56,14 @@ public class PostController {
     }
 
     //get all posts by userId
-    @GetMapping(path = "/{userId}",
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllPostsByUserId(@PathVariable String userId){
-        ArrayList<Post> posts = postService.getAllPostsByUserId(userId);
-        if(posts.isEmpty())
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT); 
-        return new ResponseEntity<ArrayList<Post>>(postService.getAllPostsByUserId(userId), HttpStatus.OK);
-    }
+    // @GetMapping(path = "/{userId}",
+    //     produces = MediaType.APPLICATION_JSON_VALUE)
+    // public ResponseEntity<?> getAllPostsByUserId(@PathVariable String userId){
+    //     ArrayList<Post> posts = postService.getAllPostsByUserId(userId);
+    //     if(posts.isEmpty())
+    //         return new ResponseEntity<>(HttpStatus.NO_CONTENT); 
+    //     return new ResponseEntity<ArrayList<Post>>(postService.getAllPostsByUserId(userId), HttpStatus.OK);
+    // }
 
     //get all posts by username
     @GetMapping(path = "/{username}",

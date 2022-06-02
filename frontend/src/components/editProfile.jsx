@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
-const Register = ({ handler }) => {
-  let [registerUser, setRegisterUser] = useState({
+const EditProfile = ({ user }) => {
+  let navigate = useNavigate();
+  let [editedUser, setEditedUser] = useState({
     username: "",
     password: "",
     name: "",
@@ -18,48 +19,64 @@ const Register = ({ handler }) => {
     skills: "",
     interests: "",
   });
-  let navigate = useNavigate();
+  useEffect(() => {
+    setEditedUser({
+      username: user.username,
+      password: user.password,
+      name: user.name,
+      surname: user.surname,
+      email: user.email,
+      phone: user.phone,
+      gender: user.gender,
+      bio: user.bio,
+      experience: user.experience,
+      education: user.education,
+      skills: user.skills,
+      interests: user.interests,
+    });
+  }, []);
   const handleChange = (item_id, e) => {
     let updatedValue = {};
     updatedValue[item_id] = e.target.value;
-    setRegisterUser((registerUser) => ({ ...registerUser, ...updatedValue }));
+    setEditedUser((editedUser) => ({ ...editedUser, ...updatedValue }));
   };
   async function handleSubmit(event) {
     event.preventDefault();
     const requestOptions = {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
-        username: registerUser.username,
-        password: registerUser.password,
-        name: registerUser.name,
-        surname: registerUser.surname,
-        email: registerUser.email,
-        phone: registerUser.phone,
-        gender: registerUser.gender,
-        bio: registerUser.bio,
-        experience: registerUser.experience,
-        education: registerUser.education,
-        skills: registerUser.skills,
-        interests: registerUser.interests,
-        isPrivate: false,
-        following: [],
-        followRequests: [],
+        id: user.id,
+        username: editedUser.username,
+        password: editedUser.password,
+        name: editedUser.name,
+        surname: editedUser.surname,
+        email: editedUser.email,
+        phone: editedUser.phone,
+        gender: editedUser.gender,
+        bio: editedUser.bio,
+        experience: editedUser.experience,
+        education: editedUser.education,
+        skills: editedUser.skills,
+        interests: editedUser.interests,
+        isPrivate: user.isPrivate,
+        following: user.following,
+        followRequests: user.followRequests,
       }),
     };
     const response = await fetch("http://localhost:8088/user", requestOptions);
     const body = await response.json();
-    handler(body);
-    sessionStorage.setItem("username", registerUser.username);
-    sessionStorage.setItem("userId", body.id);
+    alert("Saved changes successfuly!");
+    sessionStorage.clear();
+    sessionStorage.setItem("username", editedUser.username);
+    sessionStorage.setItem("userId", user.id);
     navigate("/feed", { replace: true });
   }
-
   return (
-    <div className={"register"}>
+    <div>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Label>Name</Form.Label>
@@ -67,6 +84,7 @@ const Register = ({ handler }) => {
             type="text"
             placeholder="Enter Name"
             onChange={(e) => handleChange("name", e)}
+            defaultValue={user.name}
           />
         </Form.Group>
 
@@ -76,6 +94,7 @@ const Register = ({ handler }) => {
             type="text"
             placeholder="Enter Surname"
             onChange={(e) => handleChange("surname", e)}
+            defaultValue={user.surname}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicUsername">
@@ -84,14 +103,16 @@ const Register = ({ handler }) => {
             type="text"
             placeholder="Enter username"
             onChange={(e) => handleChange("username", e)}
+            defaultValue={user.username}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
-            type="password"
+            type="text"
             placeholder="Enter Password"
             onChange={(e) => handleChange("password", e)}
+            defaultValue={user.password}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -100,6 +121,7 @@ const Register = ({ handler }) => {
             type="email"
             placeholder="Enter Email"
             onChange={(e) => handleChange("email", e)}
+            defaultValue={user.email}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPhone">
@@ -108,11 +130,15 @@ const Register = ({ handler }) => {
             type="text"
             placeholder="Enter Phone"
             onChange={(e) => handleChange("phone", e)}
+            defaultValue={user.phone}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicGender">
           <Form.Label>Gender</Form.Label>
-          <Form.Select onChange={(e) => handleChange("gender", e)}>
+          <Form.Select
+            onChange={(e) => handleChange("gender", e)}
+            defaultValue={user.gender}
+          >
             <option value="male">Male</option>
             <option value="female">Female</option>
             <option value="other">Other</option>
@@ -124,6 +150,7 @@ const Register = ({ handler }) => {
             type="text"
             placeholder="Enter Bio"
             onChange={(e) => handleChange("bio", e)}
+            defaultValue={user.bio}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicExperience">
@@ -132,6 +159,7 @@ const Register = ({ handler }) => {
             type="text"
             placeholder="Enter Experience"
             onChange={(e) => handleChange("experience", e)}
+            defaultValue={user.experience}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEducation">
@@ -140,6 +168,7 @@ const Register = ({ handler }) => {
             type="text"
             placeholder="Enter Education"
             onChange={(e) => handleChange("education", e)}
+            defaultValue={user.education}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicSkills">
@@ -148,6 +177,7 @@ const Register = ({ handler }) => {
             type="text"
             placeholder="Enter Skills"
             onChange={(e) => handleChange("skills", e)}
+            defaultValue={user.skills}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicInterests">
@@ -156,6 +186,7 @@ const Register = ({ handler }) => {
             type="text"
             placeholder="Enter Interests"
             onChange={(e) => handleChange("interests", e)}
+            defaultValue={user.interests}
           />
         </Form.Group>
         <Button
@@ -163,11 +194,11 @@ const Register = ({ handler }) => {
           type="submit"
           onClick={(e) => handleSubmit(e)}
         >
-          Register
+          Save Changes
         </Button>
       </Form>
     </div>
   );
 };
 
-export default Register;
+export default EditProfile;

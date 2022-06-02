@@ -39,5 +39,6 @@
   },
   "devDependencies": {
     "react-router-dom": "^6.3.0"
-  }
+  },
+  "homepage": "/home"
 }
