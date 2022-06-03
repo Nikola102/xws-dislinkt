@@ -81,7 +81,7 @@ const Feed = (props) => {
     handleClose();
   }
   return (
-    <div>
+    <div className={"background"}>
       <div>
         <RegisteredLayout profile={user} />
       </div>

@@ -3,10 +3,15 @@ import Layout from "./layout";
 import RegisteredLayout from "./registeredLayout";
 const Home = (props) => {
   let username = sessionStorage.getItem("username");
+  const helper = () => {
+    sessionStorage.clear();
+  };
   return (
-    <div>
-      {username && <RegisteredLayout />}
-      {!username && <Layout handler={props.handler} />}
+    <div className={"background"}>
+      {(username === undefined || !username) && (
+        <Layout handler={props.handler} />
+      )}
+      {username && helper() && <Layout handler={props.handler} />}
     </div>
   );
 };

@@ -159,7 +159,7 @@ const Register = ({ handler }) => {
           />
         </Form.Group>
         <Button
-          variant="outline-primary"
+          variant="outline-secondary"
           type="submit"
           onClick={(e) => handleSubmit(e)}
         >
