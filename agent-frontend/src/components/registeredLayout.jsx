@@ -13,8 +13,8 @@ const RegisteredLayout = (props) => {
   }, [props.profile]);
   return (
     <div>
-      <Navbar bg="dark" variant="light" expand="lg">
-        <Nav className="justify-content right-margin">
+      <Navbar bg="light" variant="light" expand="lg">
+        <Nav className="justify-content-center">
           <Nav.Link
             onClick={() => {
               navigate("/company", { replace: true });

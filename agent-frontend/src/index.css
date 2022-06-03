@@ -1,5 +1,6 @@
 body {
   height: 100%;
+  font-family: "helvetica";
   background: linear-gradient(
     0deg,
     rgba(255, 255, 255, 1) 0%,
@@ -11,7 +12,6 @@ html {
   height: 100%;
 }
 .register {
-  font-family: "helvetica";
   width: 50%;
   margin-left: 25%;
   color: rgb(250, 250, 250);
@@ -26,4 +26,21 @@ html {
   left: 0;
   height: 100%;
   width: 100%;
+}
+#dislinkt-title {
+  background-image: linear-gradient(
+    270deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(127, 127, 127, 1) 50%,
+    rgba(25, 25, 25, 1) 100%
+  );
+  background-clip: text;
+  font-size: 140px;
+  width: 45%;
+  text-align: left;
+  color: transparent;
+  height: 165px;
+}
+.bottom-title {
+  margin-top: 35%;
 }

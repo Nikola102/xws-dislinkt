@@ -1,6 +1,5 @@
 import React from "react";
 import Layout from "./layout";
-import RegisteredLayout from "./registeredLayout";
 const Home = (props) => {
   let username = sessionStorage.getItem("username");
   const helper = () => {
