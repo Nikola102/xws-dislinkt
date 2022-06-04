@@ -3,7 +3,6 @@ import PublicProfiles from "./components/publicProfiles";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/login";
 import Register from "./components/register";
-import Layout from "./components/layout";
 import UserProfile from "./components/userProfile";
 import Feed from "./components/feed";
 import Search from "./components/search";
@@ -64,54 +63,49 @@ class App extends Component {
   }
   render() {
     return (
-      <div className={"background"}>
-        <Router>
-          <Routes>
-            <Route path="/home" element={<Home handler={this.searchHandler} />}>
-              <Route
-                index
-                element={<PublicProfiles profiles={this.state.searchUsers} />}
-              />
-            </Route>
-            {this.state.profiles.map((profile) => (
-              <Route
-                key={profile.id}
-                path={profile.username}
-                element={
-                  <UserProfile
-                    user={profile}
-                    refreshPage={this.getPosts}
-                    handler={this.searchHandler}
-                  />
-                }
-              />
-            ))}
+      <Router>
+        <Routes>
+          <Route path="/home" element={<Home handler={this.searchHandler} />}>
             <Route
-              path="login"
-              element={<Login handler={this.userHandler} />}
+              index
+              element={<PublicProfiles profiles={this.state.searchUsers} />}
             />
+          </Route>
+          {this.state.profiles.map((profile) => (
             <Route
-              path="register"
-              element={<Register handler={this.userHandler} />}
-            />
-            <Route
-              path="feed"
+              key={profile.id}
+              path={profile.username}
               element={
-                <Feed
-                  posts={this.state.posts}
-                  user={this.state.user}
+                <UserProfile
+                  user={profile}
                   refreshPage={this.getPosts}
+                  handler={this.searchHandler}
                 />
               }
             />
-            <Route path="search" element={<Search />} />
-            <Route
-              path=":username/edit"
-              element={<EditProfile user={this.state.user} />}
-            />
-          </Routes>
-        </Router>
-      </div>
+          ))}
+          <Route path="login" element={<Login handler={this.userHandler} />} />
+          <Route
+            path="register"
+            element={<Register handler={this.userHandler} />}
+          />
+          <Route
+            path="feed"
+            element={
+              <Feed
+                posts={this.state.posts}
+                user={this.state.user}
+                refreshPage={this.getPosts}
+              />
+            }
+          />
+          <Route path="search" element={<Search user={this.state.user} />} />
+          <Route
+            path=":username/edit"
+            element={<EditProfile user={this.state.user} />}
+          />
+        </Routes>
+      </Router>
     );
   }
 }

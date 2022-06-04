@@ -28,29 +28,36 @@ const Login = ({ handler }) => {
     navigate("/feed", { replace: true });
   }
   return (
-    <div className="login">
-      <Form>
-        <Form.Group className="mb-3" controlId="formBasicUsername">
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </Form.Group>
+    <div className={"login-background"}>
+      <div className={"login"}>
+        <h1 className={"dislinkt-title"}>Dislinkt</h1>
+        <Form>
+          <Form.Group className={"login-form"} controlId="formBasicUsername">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </Form.Group>
 
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </Form.Group>
-        <Button variant="outline-primary" type="submit" onClick={handleSubmit}>
-          Login
-        </Button>
-      </Form>
+          <Form.Group className={"login-form"} controlId="formBasicPassword">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </Form.Group>
+          <Button
+            variant="outline-secondary"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Login
+          </Button>
+        </Form>
+      </div>
     </div>
   );
 };

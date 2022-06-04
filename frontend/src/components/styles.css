@@ -1,9 +1,9 @@
 .background {
   background-color: rgb(250, 250, 250);
-  height: 100vh;
+  height: 100%;
+  width: 100%;
 }
 .profile-list {
-  height: 100%;
   justify-content: center;
   text-align: center;
   width: 30%;
@@ -87,7 +87,7 @@
   background-color: rgb(255, 255, 255);
 }
 .post-list {
-  height: 100%;
+  height: auto;
   text-align: left;
 }
 .post-profile {
@@ -136,4 +136,40 @@
 }
 .form-control:focus {
   box-shadow: none;
+  border-color: rgb(150, 150, 150);
+}
+.login {
+  width: 50%;
+  margin-left: 25%;
+  background-color: rgb(250, 250, 250);
+  color: rgb(33, 37, 41);
+  border: solid white;
+  border-radius: 10px;
+  padding: 2% 2% 2% 2%;
+}
+.login-background {
+  padding: 10%;
+  background-color: rgb(33, 37, 41);
+  height: 100%;
+}
+.dislinkt-title {
+  text-align: center;
+  color: rgb(33, 37, 41);
+}
+.login-form {
+  color: rgb(33, 37, 41);
+  margin-bottom: 2%;
+}
+#root {
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+body {
+  height: 100%;
+  background-color: rgb(250, 250, 250);
+}
+html {
+  height: 100%;
 }

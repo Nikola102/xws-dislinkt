@@ -1,16 +1,17 @@
 import React from "react";
 import Layout from "./layout";
-const Home = (props) => {
+const Home = () => {
   let username = sessionStorage.getItem("username");
   const helper = () => {
     sessionStorage.clear();
   };
   return (
     <div className={"background"}>
-      {(username === undefined || !username) && (
-        <Layout handler={props.handler} />
-      )}
-      {username && helper() && <Layout handler={props.handler} />}
+      {(username === undefined || !username) && <Layout />}
+      {username && helper() && <Layout />}
+      <div className={"bottom-title"}>
+        <h1 id="dislinkt-title">Agent Dislinkt</h1>
+      </div>
     </div>
   );
 };
