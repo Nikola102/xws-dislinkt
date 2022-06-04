@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 
-const Register = ({ handler }) => {
+const Register = (props) => {
   let [registerAgent, setRegisterAgent] = useState({
     username: "",
     password: "",
@@ -41,14 +41,14 @@ const Register = ({ handler }) => {
       }),
     };
     const response = await fetch(
-      "http://localhost:8088/agent/save",
+      "http://localhost:8089/agent/save",
       requestOptions
     );
     const body = await response.json();
-    handler(body);
+    props.handler(body);
     sessionStorage.setItem("username", registerAgent.username);
-    sessionStorage.setItem("userId", body.id);
-    navigate("/feed", { replace: true });
+    sessionStorage.setItem("agentId", body.id);
+    navigate("/company", { replace: true });
   }
 
   return (
