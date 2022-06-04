@@ -39,9 +39,22 @@ public class JobOfferService {
         return jobOffers;
     }
 
+    public ArrayList<JobOffer> findBySearchPromoted(String search){
+        ArrayList<JobOffer> jobOffers = jobOfferRepo.getByTitleContainingOrDescriptionContainingOrTechnologyContains(search, search, search);
+        ArrayList<JobOffer> promotedJobOffers = new ArrayList<JobOffer>();
+        for (JobOffer jobOffer : jobOffers) {
+            if(jobOffer.getDislinktPromoted()){
+                promotedJobOffers.add(jobOffer);
+            }
+        }
+        return promotedJobOffers;
+    }
+
     public ArrayList<JobOffer> getByCompanyId(String companyId){
         ArrayList<JobOffer> jobOffers = jobOfferRepo.getByCompanyId(companyId);
 
         return jobOffers;
     }
+
+
 }

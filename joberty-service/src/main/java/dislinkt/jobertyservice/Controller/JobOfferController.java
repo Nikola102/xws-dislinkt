@@ -78,7 +78,16 @@ public class JobOfferController {
         if(list.size() > 0){
             return new ResponseEntity<>(list, HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping(consumes = "application/json", produces = "application/json", path = "searchPromoted/{search}")
+    public ResponseEntity<?> getJobOffersBySearchDisliktPromoted(@PathVariable String search){
+        ArrayList<JobOffer> list = jobOfferService.findBySearchPromoted(search);
+        if(list.size() > 0){
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(consumes = "application/json", produces = "application/json", path = "company/{companyId}")
