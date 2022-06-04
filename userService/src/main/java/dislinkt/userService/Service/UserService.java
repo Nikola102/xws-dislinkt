@@ -1,6 +1,7 @@
 package dislinkt.userService.Service;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -106,5 +107,31 @@ public class UserService {
         }
     }
     
+    public String generateAPIToken(String userId) {
+        User user = userRepo.getById(userId);
+
+        if (user == null) {
+            return null;
+        }
+        String upperAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        String lowerAlphabet = "abcdefghijklmnopqrstuvwxyz";
+        String numbers = "0123456789";
+        String alphaNumeric = upperAlphabet + lowerAlphabet + numbers;
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        int length = 48;
+
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(alphaNumeric.length());
+            sb.append(alphaNumeric.charAt(index));
+        }
+        String token = sb.toString();
+        user.setApiToken(token);
+        if (userRepo.save(user) != null) {
+            return token;
+        } else {
+            return null;
+        }
+    }
 
 }

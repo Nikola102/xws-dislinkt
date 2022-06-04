@@ -8,10 +8,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Document (collection = "jobOffer")
 public class JobOffer {
     @Id
@@ -24,7 +26,6 @@ public class JobOffer {
     private String seniority;
     private String field;
     private ArrayList<String> technology;
-    
-    
-
+    private String companyName;
+    private Boolean dislinktPromoted;
 }

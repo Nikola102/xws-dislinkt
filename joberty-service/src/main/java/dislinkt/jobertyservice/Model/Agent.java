@@ -24,4 +24,5 @@ public class Agent {
     private String phone;
 
     private Boolean owner;
+    private String apiToken;
 }

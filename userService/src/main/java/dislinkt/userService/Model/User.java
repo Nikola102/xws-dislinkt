@@ -29,9 +29,11 @@ public class User {
     private boolean isPrivate;
     private ArrayList<String> following;
     private ArrayList<String> followRequests;
-     
+    
     private String experience;
     private String education;
     private String skills;
     private String interests;
+
+    private String apiToken;
 }

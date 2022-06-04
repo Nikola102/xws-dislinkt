@@ -32,4 +32,16 @@ public class JobOfferService {
     public ArrayList<JobOffer> findAllJobOffers () {
         return (ArrayList<JobOffer>) jobOfferRepo.findAll();
     }
+
+    public ArrayList<JobOffer> findBySearch(String search){
+        ArrayList<JobOffer> jobOffers = jobOfferRepo.getByTitleContainingOrDescriptionContainingOrTechnologyContains(search, search, search);
+
+        return jobOffers;
+    }
+
+    public ArrayList<JobOffer> getByCompanyId(String companyId){
+        ArrayList<JobOffer> jobOffers = jobOfferRepo.getByCompanyId(companyId);
+
+        return jobOffers;
+    }
 }

@@ -28,6 +28,7 @@ public class Company {
     private String phone;
     private Boolean approved;
     private String ownerId;
+    private String ownerUsername;
 
     private ArrayList<Comment> comments;
 }

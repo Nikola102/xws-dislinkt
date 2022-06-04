@@ -29,7 +29,7 @@ public class AgentController {
     public void mdb(){
         System.out.println("mongodb.data called from userService controller");
         agentService.deleteAllAgents();
-        agentService.save(new Agent("id1", "Ivance69", "password", "Ivan", "Lukovic", "ivan@notuns.com", "0600000000", false));
+        agentService.save(new Agent("id1", "Ivance69", "password", "Ivan", "Lukovic", "ivan@notuns.com", "0600000000", false, null));
         
     }
 

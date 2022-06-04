@@ -36,4 +36,8 @@ public class CompanyService {
     public Company findByCompanyId(String companyId) {
         return companyRepo.getById(companyId);
     }
+
+    public ArrayList<Company> findByOwnerUsername(String username) {
+        return companyRepo.getByOwnerUsername(username);
+    }
 }

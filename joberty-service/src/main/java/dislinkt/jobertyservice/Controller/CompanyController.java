@@ -49,9 +49,14 @@ public class CompanyController {
         return new ResponseEntity<>(companyService.findAllCompanies(), HttpStatus.OK);
     }
 
-    @GetMapping(path = "/{id}", produces = "application/json")
+    @GetMapping(path = "/id/{id}", produces = "application/json")
     public ResponseEntity<?> getCompany(@PathVariable String id) {
         return new ResponseEntity<>(companyService.findByCompanyId(id), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/owner/{ownerUsername}", produces = "application/json")
+    public ResponseEntity<?> getCompanyByOwnerUsername(@PathVariable String ownerUsername) {
+        return new ResponseEntity<>(companyService.findByOwnerUsername(ownerUsername), HttpStatus.OK);
     }
 
 }

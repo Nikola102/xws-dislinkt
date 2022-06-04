@@ -1,5 +1,7 @@
 package dislinkt.jobertyservice.Controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,23 @@ public class JobOfferController {
     @Autowired
     private JobOfferService jobOfferService;
 
-    @GetMapping(path = "/{id}", produces = "application/json")
+    //helper method to reset and fill data to mongo container
+    @GetMapping(path = "/mongodbDataReset")
+    public void mdb(){
+        System.out.println("mongodb.data called from userService controller");
+        jobOfferService.deleteAll();
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("Java");
+        jobOfferService.save(new JobOffer("id1", "Molim neko java?", "https://www.youtube.com/watch?v=_QgcIfBZmZk", "id1", "Salaš", "entry", "java", list, "ImeComp", false ));
+        jobOfferService.save(new JobOffer("id2", "Molim neko pajton, salim se", "https://www.youtube.com/watch?v=_QgcIfBZmZk", "id1", "Salaš", "entry", "java", list, "ImeComp", false ));
+        list.add("Python");
+        jobOfferService.save(new JobOffer("id3", "Molim neko c++", "https://www.youtube.com/watch?v=_QgcIfBZmZk", "id1", "Salaš", "entry", "java", list, "CompIme", false ));
+        list.add("Lisp");
+        jobOfferService.save(new JobOffer("id4", "Molim neko f--", "https://www.youtube.com/watch?v=_QgcIfBZmZk", "id1", "Salaš", "entry", "java", list, "CompIme", false ));
+
+    }
+
+    @GetMapping(path = "/id/{id}", produces = "application/json")
     public ResponseEntity<?> getJobOffer(@PathVariable String id) {
         return new ResponseEntity<>(jobOfferService.findByJobOfferId(id), HttpStatus.OK);
     }
@@ -52,5 +70,20 @@ public class JobOfferController {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping(consumes = "application/json", produces = "application/json", path = "search/{search}")
+    public ResponseEntity<?> getJobOffersBySearch(@PathVariable String search){
+        ArrayList<JobOffer> list = jobOfferService.findBySearch(search);
+        if(list.size() > 0){
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(consumes = "application/json", produces = "application/json", path = "company/{companyId}")
+    public ResponseEntity<?> getJobOffersByCompany(@PathVariable String companyId){
+        ArrayList<JobOffer> list = jobOfferService.getByCompanyId(companyId);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }
