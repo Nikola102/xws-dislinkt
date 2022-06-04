@@ -13,14 +13,14 @@ const RegisteredLayout = (props) => {
   }, [props.profile]);
   return (
     <div>
-      <Navbar bg="light" variant="light" expand="lg">
-        <Nav className="justify-content-center">
+      <Navbar bg="dark" variant="dark" className="justify-content-center">
+        <Nav>
           <Nav.Link
             onClick={() => {
               navigate("/company", { replace: true });
             }}
           >
-            Profile
+            Companies
           </Nav.Link>
           <Nav.Link
             onClick={() => {
