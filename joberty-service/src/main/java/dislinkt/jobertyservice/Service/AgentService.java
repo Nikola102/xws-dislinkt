@@ -22,7 +22,7 @@ public class AgentService {
     }
 
     public Agent findByAgentId(String agentId) {
-        return agentRepo.findByAgentId(agentId);
+        return agentRepo.getById(agentId);
     }
 
     public ArrayList<Agent> findByUsernameContaining(String usernamePart) {
@@ -34,7 +34,7 @@ public class AgentService {
     }
 
     public Boolean deleteAgentById(String agentId) {
-        Agent agent = agentRepo.findByAgentId(agentId);
+        Agent agent = agentRepo.getById(agentId);
         if (agent == null)
             throw new IllegalArgumentException("Agent not found");
         agentRepo.delete(agent);

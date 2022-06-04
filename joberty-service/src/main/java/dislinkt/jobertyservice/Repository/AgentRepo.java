@@ -11,7 +11,7 @@ import dislinkt.jobertyservice.Model.Agent;
 public interface AgentRepo extends MongoRepository<Agent, String>{
 
     public Agent findByUsername(String username);
-    public Agent findByAgentId(String agentId);
+    public Agent getById(String agentId);
     public ArrayList<Agent> findAll();
     public ArrayList<Agent> findByUsernameContaining(String usernamePart);  
 

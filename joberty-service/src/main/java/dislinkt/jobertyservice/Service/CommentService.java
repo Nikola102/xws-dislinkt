@@ -18,7 +18,7 @@ public class CommentService {
     }
 
     public Comment findByCommentId(String commentId) {
-        return commentRepo.findByCommentId(commentId);
+        return commentRepo.getById(commentId);
     }
 
     public ArrayList<Comment> findAllComments() {

@@ -34,6 +34,6 @@ public class CompanyService {
     }
 
     public Company findByCompanyId(String companyId) {
-        return companyRepo.findByCompanyId(companyId);
+        return companyRepo.getById(companyId);
     }
 }

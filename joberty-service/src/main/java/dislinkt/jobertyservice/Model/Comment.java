@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Document (collection = "comment")
 public class Comment {
     @Id
-    private String commentId;
+    private String id;
     
     private String text;
     private Float ratings;

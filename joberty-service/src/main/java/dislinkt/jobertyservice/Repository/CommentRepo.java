@@ -8,9 +8,8 @@ import dislinkt.jobertyservice.Model.Comment;
 @Repository
 public interface CommentRepo extends MongoRepository<Comment, String>{
     
-    public Comment findByCommentId(String commentId);
-    public Comment updateComment(Comment comment);
-    public void deleteComment(String commentId);
-    public void deleteAllComments();
+    public Comment getById(String commentId);
+    public void deleteById(String commentId);
+    public void deleteAll();
 
 }

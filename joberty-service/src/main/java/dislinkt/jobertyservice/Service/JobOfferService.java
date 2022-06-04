@@ -14,7 +14,7 @@ public class JobOfferService {
     private JobOfferRepo jobOfferRepo;
 
     public JobOffer findByJobOfferId (String id) {
-        return jobOfferRepo.findByJobOfferId(id);
+        return jobOfferRepo.getById(id);
     }
     
     public JobOffer save (JobOffer jobOffer) {

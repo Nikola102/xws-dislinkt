@@ -9,10 +9,9 @@ import dislinkt.jobertyservice.Model.Company;
 public interface CompanyRepo extends MongoRepository<Company, String>{
         
         public Company findByName(String name);
-        public Company updateCompany(Company company);
-        public void deleteCompany(String companyId);
-        public void deleteAllCompanies();
-        public Company findByCompanyId(String companyId);
+        public void deleteById(String companyId);
+        public void deleteAll();
+        public Company getById(String companyId);
 }
     
 
