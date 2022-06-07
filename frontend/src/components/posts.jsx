@@ -99,8 +99,8 @@ const Posts = (props) => {
             Dislikes {post.comments.length} Comments
           </div>
           {username && (
-            <ButtonToolbar aria-label="Toolbar with button groups">
-              <ButtonGroup className="mb-2">
+            <ButtonToolbar style={{ width: "100%" }}>
+              <ButtonGroup className="mb-2" style={{ width: "25%" }}>
                 <Button
                   variant="outline-secondary"
                   onClick={() => LikePost(post.id)}
@@ -112,7 +112,7 @@ const Posts = (props) => {
                   Like
                 </Button>
               </ButtonGroup>
-              <ButtonGroup className="mb-2">
+              <ButtonGroup className="mb-2" style={{ width: "25%" }}>
                 <Button
                   variant="outline-secondary"
                   onClick={() => DislikePost(post.id)}
@@ -122,7 +122,7 @@ const Posts = (props) => {
                   Dislike
                 </Button>
               </ButtonGroup>
-              <ButtonGroup className="mb-2">
+              <ButtonGroup className="mb-2" style={{ width: "25%" }}>
                 <Button
                   variant="outline-secondary"
                   onClick={() => ShowComments(index)}
@@ -130,7 +130,7 @@ const Posts = (props) => {
                   <BiCommentDetail style={{ height: 20, width: 20 }} /> Comments
                 </Button>
               </ButtonGroup>
-              <ButtonGroup className="mb-2">
+              <ButtonGroup className="mb-2" style={{ width: "25%" }}>
                 <Button variant="outline-secondary">
                   <IoIosShareAlt
                     style={{ height: 20, width: 20, marginBottom: 2 }}

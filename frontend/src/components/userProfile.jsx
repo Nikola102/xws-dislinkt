@@ -89,6 +89,9 @@ const UserProfile = (props) => {
             <Row className={"profile-view-row"}>
               <Col>
                 <Button disabled className="profile-btn">
+                  <AiOutlineUser
+                    style={{ height: 20, width: 20, marginBottom: 2 }}
+                  />{" "}
                   Follow
                 </Button>
               </Col>
@@ -98,6 +101,9 @@ const UserProfile = (props) => {
                   variant="outline-primary"
                   className="profile-btn"
                 >
+                  <AiOutlineMessage
+                    style={{ height: 20, width: 20, marginBottom: 2 }}
+                  />{" "}
                   Message
                 </Button>
               </Col>
@@ -107,6 +113,7 @@ const UserProfile = (props) => {
                   variant="outline-danger"
                   className="profile-btn"
                 >
+                  <BiBlock style={{ height: 20, width: 20, marginBottom: 2 }} />{" "}
                   Block
                 </Button>
               </Col>
