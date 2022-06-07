@@ -2,6 +2,7 @@ package dislinkt.jobertyservice.Controller;
 
 import java.util.ArrayList;
 
+import org.springframework.http.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dislinkt.jobertyservice.Dto.LoginDto;
 import dislinkt.jobertyservice.Model.Agent;
 import dislinkt.jobertyservice.Service.AgentService;
 
@@ -83,6 +85,17 @@ public class AgentController {
     public ResponseEntity<?> save(@RequestBody Agent agent) {
         agentService.save(agent);
         return new ResponseEntity<Agent>(agent, HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/login", 
+        consumes = MediaType.APPLICATION_JSON_VALUE, 
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> login(@RequestBody LoginDto loginDto){
+        try{
+            return new ResponseEntity<Agent>(agentService.login(loginDto.getUsername(), loginDto.getPassword()), HttpStatus.OK);
+        } catch (IllegalStateException e) {
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
     
 }

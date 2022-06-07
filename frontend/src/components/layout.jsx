@@ -5,6 +5,7 @@ import { Outlet } from "react-router-dom";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import FormControl from "react-bootstrap/FormControl";
+import { IoMdSearch } from "react-icons/io";
 
 const Layout = (props) => {
   let [search, setSearch] = useState("");
@@ -41,7 +42,8 @@ const Layout = (props) => {
               id="search-btn"
               onClick={searchForUsers}
             >
-              Search
+              Search{" "}
+              <IoMdSearch style={{ height: 20, width: 20, marginBottom: 2 }} />
             </Button>
           </InputGroup>
         </Nav>

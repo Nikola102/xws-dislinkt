@@ -4,6 +4,9 @@ import ButtonToolbar from "react-bootstrap/ButtonToolbar";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Image from "react-bootstrap/Image";
+import { AiOutlineLike, AiOutlineDislike } from "react-icons/ai";
+import { IoIosShareAlt } from "react-icons/io";
+import { BiCommentDetail } from "react-icons/bi";
 
 const FeedPosts = (props) => {
   let [posts, setPosts] = useState([]);
@@ -93,6 +96,10 @@ const FeedPosts = (props) => {
                 variant="outline-secondary"
                 onClick={() => LikePost(post.id)}
               >
+                <AiOutlineLike
+                  style={{ height: 20, width: 20, marginBottom: 4 }}
+                />
+                {"  "}
                 Like
               </Button>
             </ButtonGroup>
@@ -101,6 +108,8 @@ const FeedPosts = (props) => {
                 variant="outline-secondary"
                 onClick={() => DislikePost(post.id)}
               >
+                <AiOutlineDislike style={{ height: 20, width: 20 }} />
+                {"  "}
                 Dislike
               </Button>
             </ButtonGroup>
@@ -109,11 +118,16 @@ const FeedPosts = (props) => {
                 variant="outline-secondary"
                 onClick={() => ShowComments(index)}
               >
-                Comment
+                <BiCommentDetail style={{ height: 20, width: 20 }} /> Comment
               </Button>
             </ButtonGroup>
             <ButtonGroup className="mb-2">
-              <Button variant="outline-secondary">Share</Button>
+              <Button variant="outline-secondary">
+                <IoIosShareAlt
+                  style={{ height: 20, width: 20, marginBottom: 2 }}
+                />{" "}
+                Share
+              </Button>
             </ButtonGroup>
           </ButtonToolbar>
           <div

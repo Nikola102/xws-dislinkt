@@ -46,4 +46,15 @@ public class AgentService {
         agentRepo.save(agent);
     }
 
+    public Agent login(String username, String password){
+        Agent agent = agentRepo.findByUsername(username);
+        if(agent == null){
+            throw new IllegalStateException("Agent does not exist!");
+        }
+        if(!agent.getPassword().equals(password)){
+            throw new IllegalStateException("Password is incorrect!");
+        }
+        return agent;
+    }
+
 }

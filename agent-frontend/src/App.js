@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/home";
 import Register from "./components/register";
 import Company from "./components/company";
+import Login from "./components/login";
 class App extends Component {
   state = {
     user: {},
@@ -22,6 +23,7 @@ class App extends Component {
             element={<Register handler={this.userHandler} />}
           />
           <Route path="/company" element={<Company user={this.state.user} />} />
+          <Route path="/login" element={<Login handler={this.userHandler} />} />
         </Routes>
       </Router>
     );

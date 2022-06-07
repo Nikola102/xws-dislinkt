@@ -7,6 +7,10 @@ import { Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Layout from "./layout";
 import RegisteredLayout from "./registeredLayout";
+import { FiEdit2 } from "react-icons/fi";
+import { BiBlock } from "react-icons/bi";
+import { AiOutlineMessage, AiOutlineUser } from "react-icons/ai";
+
 const UserProfile = (props) => {
   let [user, setUser] = useState({ posts: [] });
   let username = sessionStorage.getItem("username");
@@ -49,7 +53,8 @@ const UserProfile = (props) => {
             <Row className={"profile-view-row"}>
               <Col>
                 <Button className="profile-btn" onClick={() => edit()}>
-                  Edit
+                  <FiEdit2 style={{ height: 20, width: 20 }} />
+                  {"  "} Edit
                 </Button>
               </Col>
             </Row>
@@ -58,16 +63,23 @@ const UserProfile = (props) => {
             <Row className={"profile-view-row"}>
               <Col>
                 <Button className="profile-btn" onClick={() => follow()}>
+                  <AiOutlineUser
+                    style={{ height: 20, width: 20, marginBottom: 2 }}
+                  />{" "}
                   Follow
                 </Button>
               </Col>
               <Col>
                 <Button variant="outline-primary" className="profile-btn">
+                  <AiOutlineMessage
+                    style={{ height: 20, width: 20, marginBottom: 2 }}
+                  />{" "}
                   Message
                 </Button>
               </Col>
               <Col>
                 <Button variant="outline-danger" className="profile-btn">
+                  <BiBlock style={{ height: 20, width: 20, marginBottom: 2 }} />{" "}
                   Block
                 </Button>
               </Col>
