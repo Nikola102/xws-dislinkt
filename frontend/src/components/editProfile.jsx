@@ -19,6 +19,7 @@ const EditProfile = ({ user }) => {
     education: "",
     skills: "",
     interests: "",
+    apiToken: "",
   });
   useEffect(() => {
     setEditedUser({
@@ -34,6 +35,7 @@ const EditProfile = ({ user }) => {
       education: user.education,
       skills: user.skills,
       interests: user.interests,
+      apiToken: user.apiToken,
     });
   }, []);
   const handleChange = (item_id, e) => {
@@ -66,6 +68,7 @@ const EditProfile = ({ user }) => {
         isPrivate: user.isPrivate,
         following: user.following,
         followRequests: user.followRequests,
+        apiToken: editedUser.apiToken,
       }),
     };
     const response = await fetch("http://localhost:8088/user", requestOptions);
@@ -192,6 +195,15 @@ const EditProfile = ({ user }) => {
               placeholder="Enter Interests"
               onChange={(e) => handleChange("interests", e)}
               defaultValue={user.interests}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicInterests">
+            <Form.Label>Api Token</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Api Token"
+              onChange={(e) => handleChange("apiToken", e)}
+              defaultValue={user.apiToken}
             />
           </Form.Group>
           <Button
