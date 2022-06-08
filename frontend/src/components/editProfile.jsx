@@ -20,8 +20,8 @@ const EditProfile = ({ user }) => {
     education: "",
     skills: "",
     interests: "",
-    apiToken: "",
   });
+  let [apiToken, setApiToken] = useState(user.apiToken);
   useEffect(() => {
     setEditedUser({
       username: user.username,
@@ -36,8 +36,8 @@ const EditProfile = ({ user }) => {
       education: user.education,
       skills: user.skills,
       interests: user.interests,
-      apiToken: user.apiToken,
     });
+    setApiToken(user.apiToken);
   }, []);
   const handleChange = (item_id, e) => {
     let updatedValue = {};
@@ -69,7 +69,7 @@ const EditProfile = ({ user }) => {
         isPrivate: user.isPrivate,
         following: user.following,
         followRequests: user.followRequests,
-        apiToken: editedUser.apiToken,
+        apiToken: apiToken,
       }),
     };
     const response = await fetch("http://localhost:8088/user", requestOptions);
@@ -80,6 +80,23 @@ const EditProfile = ({ user }) => {
     sessionStorage.setItem("userId", user.id);
     navigate("/feed", { replace: true });
   }
+  async function generateToken() {
+    const requestOptions = {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
+    };
+    fetch("http://localhost:8088/user/generateToken/" + user.id, requestOptions)
+      .then((response) => {
+        return response.text();
+      })
+      .then((body) => {
+        setApiToken(body);
+      });
+  }
+
   return (
     <div>
       <div>
@@ -202,15 +219,6 @@ const EditProfile = ({ user }) => {
                     defaultValue={user.interests}
                   />
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicInterests">
-                  <Form.Label>Api Token</Form.Label>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter Api Token"
-                    onChange={(e) => handleChange("apiToken", e)}
-                    defaultValue={user.apiToken}
-                  />
-                </Form.Group>
                 <Button
                   variant="outline-primary"
                   type="submit"
@@ -219,6 +227,24 @@ const EditProfile = ({ user }) => {
                   Save Changes
                 </Button>
               </Form>
+              <br />
+              <Row>
+                <Col xs={10} style={{ textAlign: "center" }}>
+                  <p
+                    style={{
+                      border: "1px solid rgb(230,230,230)",
+                      width: "95%",
+                      padding: "3.5%",
+                      borderRadius: "6px",
+                    }}
+                  >
+                    {apiToken}
+                  </p>
+                </Col>
+                <Col xs={2} style={{ textAlign: "center" }}>
+                  <Button onClick={generateToken}>Generate Token</Button>
+                </Col>
+              </Row>
             </div>
           </Col>
           <Col>

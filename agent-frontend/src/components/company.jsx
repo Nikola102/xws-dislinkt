@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import RegisteredLayout from "./registeredLayout";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/esm/Col";
+import Row from "react-bootstrap/esm/Row";
 
 const Company = (props) => {
+  let [companyOfUser, setCompanyOfUser] = useState({});
   let [company, setCompany] = useState({
     name: "",
     description: "",
@@ -64,7 +67,7 @@ const Company = (props) => {
       requestOptions
     );
     const body = await response.json();
-    setCompany(body);
+    setCompanyOfUser(body);
   }
   useEffect(() => {
     getCompanyByOwner();
@@ -72,64 +75,92 @@ const Company = (props) => {
   return (
     <div>
       <RegisteredLayout profile={props.user} />
-      <div
-        style={{
-          backgroundColor: "white",
-          padding: "2%",
-          borderRadius: "10px",
-        }}
-      >
-        <h1> Create Company </h1>
-        <Form>
-          <Form.Group className="mb-3">
-            <Form.Label>Name of Company</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter name"
-              onChange={(e) => handleChange("name", e)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Company Description</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Describe your company"
-              onChange={(e) => handleChange("description", e)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Company Culture</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Describe your company's culture"
-              onChange={(e) => handleChange("culture", e)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              onChange={(e) => handleChange("email", e)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Phone number</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter phone number"
-              onChange={(e) => handleChange("Phone", e)}
-            />
-          </Form.Group>
-          <Button
-            variant="secondary"
-            type="submit"
-            onClick={(e) => handleSubmit(e)}
-          >
-            Submit request
-          </Button>
-        </Form>
-      </div>
+      {!companyOfUser && (
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "2%",
+          }}
+        >
+          <h1> Create Company </h1>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Name of Company</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter name"
+                onChange={(e) => handleChange("name", e)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Company Description</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Describe your company"
+                onChange={(e) => handleChange("description", e)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Company Culture</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Describe your company's culture"
+                onChange={(e) => handleChange("culture", e)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                onChange={(e) => handleChange("email", e)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Phone number</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter phone number"
+                onChange={(e) => handleChange("Phone", e)}
+              />
+            </Form.Group>
+            <Button
+              variant="secondary"
+              type="submit"
+              onClick={(e) => handleSubmit(e)}
+            >
+              Submit request
+            </Button>
+          </Form>
+        </div>
+      )}
+      {companyOfUser.length > 0 && (
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "2%",
+            color: "black",
+          }}
+        >
+          <Row style={{ textAlign: "center" }}>
+            <Col>Company Name</Col>
+            <Col>Email</Col>
+            <Col>Phone number</Col>
+            <Col></Col>
+          </Row>
+          <br />
+          <Row style={{ textAlign: "center" }}>
+            <Col>{companyOfUser[0].name}</Col>
+            <Col>{companyOfUser[0].email}</Col>
+            <Col>{companyOfUser[0].phone}</Col>
+            <Col>
+              <Button variant="outline-secondary">View</Button>
+            </Col>
+          </Row>
+
+          <p></p>
+        </div>
+      )}
     </div>
   );
 };
