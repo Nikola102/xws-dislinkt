@@ -88,7 +88,9 @@ const RegisteredLayout = (props) => {
             Logout
           </Nav.Link>
         </Nav>
-        <Navbar.Text>Signed in as: {username}</Navbar.Text>
+        <Navbar.Text style={{ marginRight: "1%" }}>
+          Signed in as: {username}
+        </Navbar.Text>
       </Navbar>
       <Outlet />
     </div>

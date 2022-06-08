@@ -178,3 +178,28 @@ html {
   outline: none;
   box-shadow: none;
 }
+.register-background {
+  background-color: rgb(33, 37, 41);
+  height: auto;
+  padding: 2%;
+}
+.edit-form {
+  background-color: white;
+  border: solid 2px rgb(240, 240, 240);
+  border-radius: 10px;
+  padding: 2%;
+  margin: 2%;
+}
+.padding-0 {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+.edit-image {
+  background-color: white;
+  border: solid 2px rgb(240, 240, 240);
+  border-radius: 10px;
+  padding: 2%;
+  margin: 2%;
+}
