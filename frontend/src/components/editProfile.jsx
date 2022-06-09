@@ -234,7 +234,7 @@ const EditProfile = ({ user }) => {
                     style={{
                       border: "1px solid rgb(230,230,230)",
                       width: "95%",
-                      padding: "3.5%",
+                      padding: "2.6%",
                       borderRadius: "6px",
                     }}
                   >

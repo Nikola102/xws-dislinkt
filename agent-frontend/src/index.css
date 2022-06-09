@@ -7,6 +7,9 @@ body {
     rgba(127, 127, 127, 1) 50%,
     rgba(33, 37, 41, 1) 93%
   );
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 html {
   height: 100%;
@@ -58,4 +61,34 @@ html {
 .form-control:focus {
   box-shadow: none;
   border-color: rgb(150, 150, 150);
+}
+.jobs {
+  width: 40%;
+  margin: 0 auto;
+}
+.job-accordion-item {
+  color: rgb(160, 160, 160) !important;
+  background-color: rgb(29, 34, 38) !important;
+  border: 1px solid rgb(40, 40, 40) !important;
+}
+.job-accordion-body {
+  color: rgb(160, 160, 160) !important;
+  background-color: rgb(29, 34, 38) !important;
+}
+.job-accordion-header {
+  color: rgb(160, 160, 160) !important;
+  background-color: rgb(29, 34, 38) !important;
+}
+.accordion-button {
+  color: rgb(163, 162, 164);
+  background-color: rgb(29, 34, 38) !important;
+}
+.accordion-button::after {
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23bbbbbb'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+  background-repeat: no-repeat;
+}
+.accordion-button:hover,
+.accordion-button:focus {
+  outline: none;
+  box-shadow: none;
 }
