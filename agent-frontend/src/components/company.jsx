@@ -4,8 +4,10 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
+import { useNavigate } from "react-router-dom";
 
 const Company = (props) => {
+  let navigate = useNavigate();
   let [companyOfUser, setCompanyOfUser] = useState({});
   let [company, setCompany] = useState({
     name: "",
@@ -39,7 +41,7 @@ const Company = (props) => {
         name: company.name,
         description: company.description,
         culture: company.culture,
-        email: company.email,
+        mail: company.mail,
         phone: company.phone,
         approved: company.approved,
         ownerId: props.user.id,
@@ -68,6 +70,7 @@ const Company = (props) => {
     );
     const body = await response.json();
     setCompanyOfUser(body);
+    props.handler(body);
   }
   useEffect(() => {
     getCompanyByOwner();
@@ -75,7 +78,7 @@ const Company = (props) => {
   return (
     <div>
       <RegisteredLayout profile={props.user} />
-      {!companyOfUser && (
+      {!companyOfUser.length > 0 && (
         <div
           style={{
             backgroundColor: "white",
@@ -113,7 +116,7 @@ const Company = (props) => {
               <Form.Control
                 type="email"
                 placeholder="Enter email"
-                onChange={(e) => handleChange("email", e)}
+                onChange={(e) => handleChange("mail", e)}
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -121,7 +124,7 @@ const Company = (props) => {
               <Form.Control
                 type="text"
                 placeholder="Enter phone number"
-                onChange={(e) => handleChange("Phone", e)}
+                onChange={(e) => handleChange("phone", e)}
               />
             </Form.Group>
             <Button
@@ -137,7 +140,7 @@ const Company = (props) => {
       {companyOfUser.length > 0 && (
         <div
           style={{
-            backgroundColor: "white",
+            backgroundColor: "rgb(250,250,250)",
             padding: "2%",
             color: "black",
           }}
@@ -151,10 +154,17 @@ const Company = (props) => {
           <br />
           <Row style={{ textAlign: "center" }}>
             <Col>{companyOfUser[0].name}</Col>
-            <Col>{companyOfUser[0].email}</Col>
+            <Col>{companyOfUser[0].mail}</Col>
             <Col>{companyOfUser[0].phone}</Col>
             <Col>
-              <Button variant="outline-secondary">View</Button>
+              <Button
+                variant="outline-secondary"
+                onClick={() => {
+                  navigate("/company/view", { replace: true });
+                }}
+              >
+                View
+              </Button>
             </Col>
           </Row>
 

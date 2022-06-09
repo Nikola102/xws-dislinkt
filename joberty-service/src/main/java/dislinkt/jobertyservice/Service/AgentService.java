@@ -46,6 +46,19 @@ public class AgentService {
         agentRepo.save(agent);
     }
 
+    public boolean updateToken(String username,String apiToken){
+        Agent dbAgent=agentRepo.findByUsername(username);
+        if(dbAgent!=null){
+            dbAgent.setApiToken(apiToken);
+            agentRepo.save(dbAgent);
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
     public Agent login(String username, String password){
         Agent agent = agentRepo.findByUsername(username);
         if(agent == null){
