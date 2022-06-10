@@ -38,6 +38,16 @@ public class UserService {
 
         return userRepo.save(newUser);
     }
+    public User update(User editedUser){
+        User existingUser=userRepo.getById(editedUser.getId());
+        if(existingUser==null){
+            throw new IllegalStateException("User does not exist!");
+        }
+        else{
+            userRepo.delete(existingUser);
+            return userRepo.save(editedUser);
+        }
+    }
 
     public User findByUsername(String username){
         User user = userRepo.findByUsername(username);
@@ -45,6 +55,16 @@ public class UserService {
             throw new IllegalStateException("User does not exist!");
         }
         return user;
+    }
+    public User togglePrivacy(String username){
+        User existingUser=userRepo.findByUsername(username);
+        if(existingUser==null){
+            throw new IllegalStateException("User does not exist!");
+        }
+        else{
+            existingUser.setPrivate(!existingUser.isPrivate());
+            return userRepo.save(existingUser);
+        }
     }
 
     public Boolean deleteUser(String username){
@@ -105,6 +125,41 @@ public class UserService {
             followerUser.getFollowing().add(toFollowUsername);
             return userRepo.save(followerUser);
         }
+    }
+    public User block(String userBlockingUsername,String userBlockedUsername){
+        User userBlocking=userRepo.findByUsername(userBlockingUsername);
+        User userBlocked=userRepo.findByUsername(userBlockedUsername);
+        if(userBlocking==null){
+            throw new IllegalStateException("User who is trying to block does not exist!");
+        }
+        
+        if(userBlocked==null){
+            throw new IllegalStateException("User being blocked does not exist!");
+        }
+
+        if(userBlocking.getBlocked().contains(userBlockedUsername)){
+            throw new IllegalStateException("You already blocked this user!");
+        }
+
+        if(userBlocking.getFollowing().contains(userBlockedUsername)){
+            userBlocking.getFollowing().remove(userBlockedUsername);
+        }
+
+        if(userBlocking.getFollowRequests().contains(userBlockedUsername)){
+            userBlocking.getFollowRequests().remove(userBlockedUsername);
+        }
+
+        if(userBlocked.getFollowing().contains(userBlockingUsername)){
+            userBlocked.getFollowing().remove(userBlockingUsername);
+        }
+
+        if(userBlocked.getFollowRequests().contains(userBlockingUsername)){
+            userBlocked.getFollowRequests().remove(userBlockingUsername);
+        }
+        userBlocking.getBlocked().add(userBlockedUsername);
+        userRepo.save(userBlocked);
+        return userRepo.save(userBlocking);
+
     }
     
     public String generateAPIToken(String userId) {

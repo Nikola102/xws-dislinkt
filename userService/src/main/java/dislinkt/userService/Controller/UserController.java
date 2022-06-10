@@ -34,11 +34,11 @@ public class UserController {
     public void mdb(){
         System.out.println("mongodb.data called from userService controller");
         userService.deleteAllUsers();
-        userService.save(new User("id1", "Ivance69", "password", "Ivan", "Lukovic", "ivan@notuns.com", "0600000000", "male", "bio sam jak, vise nisam", false, new ArrayList<String>(), new ArrayList<String>(), "", "", "", "", null));
-        userService.save(new User("id2", "ZiksaZmija", "password", "Mihajlo", "Zivkovic", "mihajlo@gmail.com", "0600000000", "male", "jak sam", false,  new ArrayList<String>(), new ArrayList<String>(), "", "", "", "", null));
-        userService.save(new User("id3", "IgorIbor", "password", "Igor", "Jakovljevic", "igor@gmail.com", "0600000000", "male", "jak sam", true,  new ArrayList<String>(), new ArrayList<String>(), "", "", "", "", null));
-        userService.save(new User("id4", "Buksa", "password", "Vukasin", "Lupurovic", "vukasin@gmail.com", "0600000000", "male", "jak sam", false,  new ArrayList<String>(), new ArrayList<String>(), "", "", "", "", null));
-        userService.save(new User("id5", "Mnikola", "password", "Nikola", "Matijevic", "nikola@gmail.com", "0600000000", "male", "jak sam", false, new ArrayList<String>(), new ArrayList<String>(), "", "", "", "", null));
+        userService.save(new User("id1", "Ivance69", "password", "Ivan", "Lukovic", "ivan@notuns.com", "0600000000", "male", "bio sam jak, vise nisam", false, new ArrayList<String>(), new ArrayList<String>(),new ArrayList<String>(), "", "", "", "", null));
+        userService.save(new User("id2", "ZiksaZmija", "password", "Mihajlo", "Zivkovic", "mihajlo@gmail.com", "0600000000", "male", "jak sam", false,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
+        userService.save(new User("id3", "IgorIbor", "password", "Igor", "Jakovljevic", "igor@gmail.com", "0600000000", "male", "jak sam", true,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
+        userService.save(new User("id4", "Buksa", "password", "Vukasin", "Lupurovic", "vukasin@gmail.com", "0600000000", "male", "jak sam", false,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
+        userService.save(new User("id5", "Mnikola", "password", "Nikola", "Matijevic", "nikola@gmail.com", "0600000000", "male", "jak sam", false, new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
     }
 
     //send message
@@ -130,7 +130,7 @@ public class UserController {
         produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateUser(@RequestBody User user){
         try {
-            return new ResponseEntity<User>(userService.save(user), HttpStatus.OK);
+            return new ResponseEntity<User>(userService.update(user), HttpStatus.OK);
         } catch (IllegalStateException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
@@ -147,7 +147,27 @@ public class UserController {
             return new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
         }
     }
-
+    @PutMapping(path="/togglePrivacy/{username}",
+        consumes=MediaType.APPLICATION_JSON_VALUE,
+        produces=MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<?> togglePrivacy(@PathVariable("username") String username){
+        try{
+            return new ResponseEntity<User>(userService.togglePrivacy(username),HttpStatus.OK);
+        } catch(IllegalStateException e){
+            return new ResponseEntity<String>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+    }
+    @PutMapping(path = "/block", 
+        consumes = MediaType.APPLICATION_JSON_VALUE, 
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> block(@RequestBody Map<String, String> block){
+        try{
+            return new ResponseEntity<User>(userService.block(block.get("blockerId"), block.get("blockedId")), HttpStatus.OK);
+        } catch (IllegalStateException e){
+            return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
  
 
 }

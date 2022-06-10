@@ -70,6 +70,7 @@ const EditProfile = ({ user }) => {
         following: user.following,
         followRequests: user.followRequests,
         apiToken: apiToken,
+        blocked: user.blocked,
       }),
     };
     const response = await fetch("http://localhost:8088/user", requestOptions);

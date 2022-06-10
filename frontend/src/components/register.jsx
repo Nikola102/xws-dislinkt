@@ -49,6 +49,7 @@ const Register = ({ handler }) => {
         following: [],
         followRequests: [],
         apiToken: null,
+        blocked: [],
       }),
     };
     const response = await fetch("http://localhost:8088/user", requestOptions);
