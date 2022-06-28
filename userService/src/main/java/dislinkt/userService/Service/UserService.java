@@ -68,6 +68,7 @@ public class UserService {
     }
 
     public Boolean deleteUser(String username){
+        System.out.println("BRISEM USERA " + username);
         User user = this.findByUsername(username);
         userRepo.delete(user);
         return true;

@@ -37,11 +37,11 @@ public class PostController {
     public void mdb(){
         System.out.println("mongodb.data called from postService controller");
         postService.deleteAllPosts();
-        postService.save(new Post("id11", "Naslov1", "deskripcijaxDDDD", "Ivance69", 0, 0));
-        postService.save(new Post("id12", "Naslov2", "deskripcijaxDDDD", "Ivance69", 0, 0));
-        postService.save(new Post("id13", "Naslov3", "deskripcijaxDDDD", "Ivance69", 0, 0));
-        postService.save(new Post("id14", "Naslov4", "deskripcijaxDDDD", "Ivance69", 0, 0));
-        postService.save(new Post("id15", "Naslov5", "deskripcijaxDDDD", "Ivance69", 0, 0));
+        postService.save(new Post("Naslov 1", "Opis 1", "id1", "Ivance69", 0, 0));
+        postService.save(new Post("Naslov 2", "Opis 2", "id1", "Ivance69", 0, 0));
+        postService.save(new Post("Naslov 3", "Opis 3", "id1", "Ivance69", 0, 0));
+        postService.save(new Post("Naslov 4", "Opis 4", "id1", "Ivance69", 0, 0));
+        postService.save(new Post("Naslov 5", "Opis 5", "id2", "ZiksaZmija", 0, 0));
 
     }
     
