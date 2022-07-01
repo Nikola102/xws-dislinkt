@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.springframework.http.MediaType;
-import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dislinkt.userService.Command.DeleteUserCommand;
+import dislinkt.coreService.Event.UserDeleteEvent;
 import dislinkt.userService.Dto.LoginDto;
 import dislinkt.userService.Model.User;
 import dislinkt.userService.Service.UserService;
@@ -29,21 +29,21 @@ import dislinkt.userService.Service.UserService;
 @CrossOrigin(origins = "*")
 public class UserController {
     @Autowired
-    private CommandGateway commandGateway;
+    UserService userService;
 
     @Autowired
-    UserService userService;
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     //helper method to reset and fill data to mongo container
     @GetMapping(path = "/mongodbDataReset")
     public void mdb(){
         System.out.println("mongodb.data called from userService controller");
         userService.deleteAllUsers();
-        userService.save(new User("Ivance69", "password", "Ivan", "Lukovic", "ivan@notuns.com", "0600000000", "male", "bio sam jak, vise nisam", false, new ArrayList<String>(), new ArrayList<String>(),new ArrayList<String>(), "", "", "", "", null));
-        userService.save(new User("ZiksaZmija", "password", "Mihajlo", "Zivkovic", "mihajlo@gmail.com", "0600000000", "male", "jak sam", false,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
-        userService.save(new User("IgorIbor", "password", "Igor", "Jakovljevic", "igor@gmail.com", "0600000000", "male", "jak sam", true,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
-        userService.save(new User("Buksa", "password", "Vukasin", "Lupurovic", "vukasin@gmail.com", "0600000000", "male", "jak sam", false,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
-        userService.save(new User("Mnikola", "password", "Nikola", "Matijevic", "nikola@gmail.com", "0600000000", "male", "jak sam", false, new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
+        userService.save(new User("id1", "Ivance69", "password", "Ivan", "Lukovic", "ivan@notuns.com", "0600000000", "male", "bio sam jak, vise nisam", false, new ArrayList<String>(), new ArrayList<String>(),new ArrayList<String>(), "", "", "", "", null));
+        userService.save(new User("id2", "ZiksaZmija", "password", "Mihajlo", "Zivkovic", "mihajlo@gmail.com", "0600000000", "male", "jak sam", false,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
+        userService.save(new User("id3", "IgorIbor", "password", "Igor", "Jakovljevic", "igor@gmail.com", "0600000000", "male", "jak sam", true,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
+        userService.save(new User("id4", "Buksa", "password", "Vukasin", "Lupurovic", "vukasin@gmail.com", "0600000000", "male", "jak sam", false,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
+        userService.save(new User("id5", "Mnikola", "password", "Nikola", "Matijevic", "nikola@gmail.com", "0600000000", "male", "jak sam", false, new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
     }
 
     //send message
@@ -91,15 +91,15 @@ public class UserController {
         produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteUser(@PathVariable("username") String username){
         try{
-            //userService.deleteUser(username);
-            String userId = userService.findByUsername(username).getId();
-            DeleteUserCommand deleteUserCommand = DeleteUserCommand.builder()
-                .userId(userId)
-                .username(username)
-                .userStatus("DELETED")
-                .build();
-            commandGateway.sendAndWait(deleteUserCommand);
 
+            User user = userService.findByUsername(username);
+
+            //Saga start
+            userService.deleteUser(username);
+            UserDeleteEvent userDeleteEvent = new UserDeleteEvent();
+            userDeleteEvent.setUserId(user.getId());
+            kafkaTemplate.send("user_delete", userDeleteEvent.getUserId());
+            
         } catch (IllegalStateException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
         }

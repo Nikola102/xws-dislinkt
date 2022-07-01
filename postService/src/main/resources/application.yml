@@ -8,6 +8,18 @@ spring:
             password: example 
             database: dislinkt
             host: localhost 
-            port: 27017 
+            port: 27017
+    autoconfigure:
+        exclude:
+            - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+    cloud:
+        stream:
+            function:
+                definition: userConsumer
+            bindings:
+                userConsumer-in-0:
+                    destination: user
+
+
 server:
     port: 8082

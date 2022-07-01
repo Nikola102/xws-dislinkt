@@ -85,12 +85,7 @@ public class PostService {
     }
 
     public void deleteUserPosts(String userId){
-        System.out.println("BRISEM USER POSTOVE");
-        ArrayList<Post> posts = postRepo.findAll();
-        for(Post post: posts){
-            if(post.getUserId() == userId){
-                postRepo.delete(post);
-            }
-        }
+        ArrayList<Post> toDeletePosts = postRepo.findAllByUserId(userId);
+        postRepo.deleteAll(toDeletePosts);
     }
 }
