@@ -1,13 +1,13 @@
 spring:
     application:
-        name: userService 
+        name: userService
     data:
-        mongodb: 
-            authentication-database: admin 
-            username: root 
-            password: example 
+        mongodb:
+            authentication-database: admin
+            username: root
+            password: example
             database: dislinkt
-            host: localhost
-            port: 27017 
+            host: mongo
+            port: 27017
 server:
     port: 8088

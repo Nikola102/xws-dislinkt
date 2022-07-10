@@ -18,3 +18,9 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: root
       ME_CONFIG_MONGODB_ADMINPASSWORD: example
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+
+  user-service:
+    image: user-service
+    restart: always
+    ports:
+      - 8088:8088
