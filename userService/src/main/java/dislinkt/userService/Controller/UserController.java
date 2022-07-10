@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import org.springframework.http.MediaType;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dislinkt.coreService.Event.UserDeleteEvent;
+import dislinkt.coreService.Event.UserUpdateEvent;
 import dislinkt.userService.Dto.LoginDto;
 import dislinkt.userService.Model.User;
 import dislinkt.userService.Service.UserService;
@@ -33,6 +35,9 @@ public class UserController {
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
+
+    @Autowired
+    private KafkaTemplate<String, UserUpdateEvent> userUpdateKafkaTemplate;
 
     //helper method to reset and fill data to mongo container
     @GetMapping(path = "/mongodbDataReset")
@@ -145,7 +150,14 @@ public class UserController {
         produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateUser(@RequestBody User user){
         try {
-            return new ResponseEntity<User>(userService.update(user), HttpStatus.OK);
+            User editedUser = userService.update(user);
+
+            UserUpdateEvent userUpdateEvent = new UserUpdateEvent();
+            BeanUtils.copyProperties(editedUser, userUpdateEvent);
+            System.out.println(userUpdateEvent.getId());
+            userUpdateKafkaTemplate.send("user_update", userUpdateEvent);
+
+            return new ResponseEntity<User>(editedUser, HttpStatus.OK);
         } catch (IllegalStateException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
