@@ -53,6 +53,9 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>
+			joberty-service-docker
+		</finalName>
 	</build>
 
 </project>
