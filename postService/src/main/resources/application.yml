@@ -1,13 +1,25 @@
 spring:
     application:
-        name: postService 
+        name: postService
     data:
-        mongodb: 
-            authentication-database: admin 
-            username: root 
-            password: example 
+        mongodb:
+            authentication-database: admin
+            username: root
+            password: example
             database: dislinkt
-            host: mongo 
-            port: 27017 
+            host: mongo
+            port: 27017
+    autoconfigure:
+        exclude:
+            - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+    cloud:
+        stream:
+            function:
+                definition: userConsumer
+            bindings:
+                userConsumer-in-0:
+                    destination: user
+
+
 server:
     port: 8082

@@ -9,5 +9,9 @@ spring:
             database: dislinkt
             host: mongo
             port: 27017
+    autoconfigure:
+        exclude:
+            - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
 server:
     port: 8088

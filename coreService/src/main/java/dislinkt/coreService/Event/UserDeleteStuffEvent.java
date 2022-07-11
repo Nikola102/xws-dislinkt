@@ -1,13 +1,14 @@
 package dislinkt.coreService.Event;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserStuffDeletedEvent {
-    private String username;
-    private String userId;
+public class UserDeleteStuffEvent extends Event{
+    private Long userId;
 }
