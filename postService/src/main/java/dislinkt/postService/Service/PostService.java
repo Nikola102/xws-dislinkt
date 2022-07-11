@@ -88,4 +88,27 @@ public class PostService {
         ArrayList<Post> toDeletePosts = postRepo.findAllByUserId(userId);
         postRepo.deleteAll(toDeletePosts);
     }
+
+    public void deleteUserComments(String userId){
+        ArrayList<Post> posts = postRepo.findAllByUserId(userId);
+        for(Post post: posts){
+            ArrayList<Comment> postComments = post.getComments();
+            for(Comment comment: postComments){
+                if(comment.getUserId().compareTo(userId) == 0){
+                    postComments.remove(comment);
+                }
+            }
+            post.setComments(postComments);
+            postRepo.save(post);
+        }
+    }
+
+
+    public void updateUserPosts(String userId, String newUsername){
+        ArrayList<Post> posts = postRepo.findAllByUserId(userId);
+        for(Post post: posts){
+            post.setUsername(newUsername);
+            postRepo.save(post);
+        }
+    }
 }
