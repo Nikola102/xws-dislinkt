@@ -74,6 +74,9 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<finalName>
+			post-service-docker
+		</finalName>
 	</build>
 
 </project>

@@ -1,6 +1,7 @@
 # Opis
 Aplikacija bazirana na mikroservisnoj arhitekturi sa ciljem pružanja usluga povezivanja poslodavaca i osoba koje traže posao.\
 \
+Tehnnologije korišćene: Java SpringBoot, MongoDB, Docker, ReactJS\
 Ocena 6  - Osnovne funkcionalnosti podeljene po zasebnim servisima.\
 Ocena 7  - Dodatne osnove funkcionalnosti i agentska aplikacija koja ce korisiti kreirane servise. gRPC za sinhronu komunikaciju izmedju servisa.\
 Ocena 8  - SAGA šablon za sinhronizaciju podataka između servisa.\
