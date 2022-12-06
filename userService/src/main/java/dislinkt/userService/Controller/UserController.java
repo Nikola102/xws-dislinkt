@@ -1,14 +1,14 @@
 package dislinkt.userService.Controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 
 import org.springframework.http.MediaType;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
+//import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dislinkt.coreService.Event.UserDeleteEvent;
-import dislinkt.coreService.Event.UserUpdateEvent;
+//import dislinkt.coreService.Event.UserDeleteEvent;
+//import dislinkt.coreService.Event.UserUpdateEvent;
 import dislinkt.userService.Dto.LoginDto;
+import dislinkt.userService.Model.GraphUser;
 import dislinkt.userService.Model.User;
+import dislinkt.userService.Service.GraphService;
 import dislinkt.userService.Service.UserService;
 
 
@@ -32,12 +34,14 @@ import dislinkt.userService.Service.UserService;
 public class UserController {
     @Autowired
     UserService userService;
-
     @Autowired
-    private KafkaTemplate<String, String> kafkaTemplate;
+    GraphService graphService;
 
-    @Autowired
-    private KafkaTemplate<String, UserUpdateEvent> userUpdateKafkaTemplate;
+    //@Autowired
+    //private KafkaTemplate<String, String> kafkaTemplate;
+
+    //@Autowired
+    //private KafkaTemplate<String, UserUpdateEvent> userUpdateKafkaTemplate;
 
     //helper method to reset and fill data to mongo container
     @GetMapping(path = "/mongodbDataReset")
@@ -97,13 +101,13 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable("username") String username){
         try{
 
-            User user = userService.findByUsername(username);
+            //User user = userService.findByUsername(username);
 
             //Saga start
             userService.deleteUser(username);
-            UserDeleteEvent userDeleteEvent = new UserDeleteEvent();
-            userDeleteEvent.setUserId(user.getId());
-            kafkaTemplate.send("user_delete", userDeleteEvent.getUserId());
+ //           UserDeleteEvent userDeleteEvent = new UserDeleteEvent();
+ //           userDeleteEvent.setUserId(user.getId());
+ //           kafkaTemplate.send("user_delete", userDeleteEvent.getUserId());
             
         } catch (IllegalStateException e) {
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -138,7 +142,7 @@ public class UserController {
         produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> follow(@RequestBody Map<String, String> followRequest){
         try{
-            return new ResponseEntity<User>(userService.follow(followRequest.get("followerId"), followRequest.get("toFollowId")), HttpStatus.OK);
+            return new ResponseEntity<User>(userService.follow(followRequest.get("followerUsername"), followRequest.get("toFollowUsername")), HttpStatus.OK);
         } catch (IllegalStateException e){
             return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -152,10 +156,10 @@ public class UserController {
         try {
             User editedUser = userService.update(user);
 
-            UserUpdateEvent userUpdateEvent = new UserUpdateEvent();
-            BeanUtils.copyProperties(editedUser, userUpdateEvent);
-            System.out.println(userUpdateEvent.getId());
-            userUpdateKafkaTemplate.send("user_update", userUpdateEvent);
+ //           UserUpdateEvent userUpdateEvent = new UserUpdateEvent();
+ //           BeanUtils.copyProperties(editedUser, userUpdateEvent);
+ //           System.out.println(userUpdateEvent.getId());
+ //           userUpdateKafkaTemplate.send("user_update", userUpdateEvent);
 
             return new ResponseEntity<User>(editedUser, HttpStatus.OK);
         } catch (IllegalStateException e) {
@@ -197,4 +201,13 @@ public class UserController {
     }
  
 
+
+    //Neo4j
+    @GetMapping(path = "/neo4j")
+    public Collection<GraphUser> getAllGraphUsers(){
+        return graphService.getAll();
+    }
+    public void addInterest(){
+        //graphService.addInterest();
+    }
 }

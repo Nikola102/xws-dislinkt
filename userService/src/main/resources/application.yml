@@ -8,10 +8,23 @@ spring:
             password: example 
             database: dislinkt
             host: localhost
-            port: 27017 
+            port: 27017
+    neo4j:
+        uri: bolt://localhost:7687
+        authentication:
+            username: neo4j
+            password: admin
     autoconfigure:
         exclude:
             - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
     
 server:
     port: 8088
+
+# org:
+#     neo4j:
+#         driver:
+#             uri: bolt://localhost:7687
+#             authentication:
+#                 username: neo4j
+#                 password: secret

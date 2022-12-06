@@ -20,19 +20,19 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
 
   user-service:
-    image: user-service
+    build: ./userService/
     restart: always
     ports:
       - 8088:8088
 
   post-service:
-    image: post-service
+    build: ./postService/
     restart: always
     ports:
       - 8082:8082
 
   joberty-service:
-    image: joberty-service
+    build: ./joberty-service/
     restart: always
     ports:
       - 8089:8089

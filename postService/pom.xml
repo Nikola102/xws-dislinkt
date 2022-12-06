@@ -57,12 +57,16 @@
 			<artifactId>spring-cloud-stream</artifactId>
 			<version>3.2.4</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
 		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-neo4j</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients -->
+		<!-- <dependency>
 			<groupId>org.apache.kafka</groupId>
 			<artifactId>kafka-clients</artifactId>
 			<version>3.0.0</version>
-		</dependency>
+		</dependency> -->
 
 
 	</dependencies>

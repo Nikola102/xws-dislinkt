@@ -18,6 +18,8 @@ import lombok.AllArgsConstructor;
 public class UserService {
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private GraphService graphService;
 
     private EmailValidator emailValidator = new EmailValidator();
 
@@ -37,6 +39,7 @@ public class UserService {
             throw new IllegalStateException("Username already taken!");
         }
 
+        graphService.save(newUser.getId(), newUser.getUsername());
 
         return userRepo.save(newUser);
     }
@@ -112,6 +115,8 @@ public class UserService {
         User followerUser = userRepo.findByUsername(followerUsername);
         User toFollowUser = userRepo.findByUsername(toFollowUsername);
 
+        graphService.follow(followerUsername, toFollowUsername);
+
         if(followerUser == null){
             throw new IllegalStateException("followerUser does not exist!");
         }
@@ -130,6 +135,7 @@ public class UserService {
             return userRepo.save(followerUser);
         }
     }
+
     public User block(String userBlockingUsername,String userBlockedUsername){
         User userBlocking=userRepo.findByUsername(userBlockingUsername);
         User userBlocked=userRepo.findByUsername(userBlockedUsername);
