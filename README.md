@@ -1,7 +1,7 @@
 # Opis
 
 <div align="center">
-  <img src="docs/Dislinkt.png" />
+  <img src="Dislinkt.png" />
   <h3>
 	A LinkedIn clone project.
   </h3>
