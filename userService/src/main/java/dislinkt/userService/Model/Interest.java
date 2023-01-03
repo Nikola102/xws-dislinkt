@@ -3,6 +3,7 @@ package dislinkt.userService.Model;
 
 import java.util.List;
 
+import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 import org.springframework.data.neo4j.core.schema.Relationship.Direction;
@@ -10,6 +11,8 @@ import org.springframework.data.neo4j.core.schema.Relationship.Direction;
 
 @Node
 public class Interest {
+    @Id
+    private String id;
     private String interestName;
     @Relationship(type = "INTERESTED_IN", direction = Direction.INCOMING)
     private List<GraphUser> interestedUsers;

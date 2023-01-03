@@ -2,12 +2,15 @@ package dislinkt.userService.Model;
 
 import java.util.List;
 
+import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 import org.springframework.data.neo4j.core.schema.Relationship.Direction;
 
 @Node
 public class Skill {
+    @Id
+    private String id;
     private String skillName;
     @Relationship(type = "HAS_SKILL", direction = Direction.INCOMING)
     private List<GraphUser> obtainedBy;

@@ -14,8 +14,6 @@ public class GraphUser {
     private String username;
     @Relationship(type = "FOLLOWING", direction = Direction.OUTGOING)
     private List<GraphUser> followed;
-    @Relationship(type = "FOLLOWED_BY", direction = Direction.OUTGOING)
-    private List<GraphUser> followers;
     @Relationship(type = "HAS_SKILL", direction = Direction.OUTGOING)
     private List<Skill> skills;
     @Relationship(type = "INTERESTED_IN", direction = Direction.OUTGOING)
@@ -41,10 +39,6 @@ public class GraphUser {
 
     public List<GraphUser> getFollowed() {
         return followed;
-    }
-
-    public List<GraphUser> getFollowers() {
-        return followers;
     }
     
 }

@@ -210,4 +210,20 @@ public class UserController {
     public void addInterest(){
         //graphService.addInterest();
     }
+
+    @GetMapping(path = "getRecommendations/{username}",
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> generateFollowRecommendations(@PathVariable("username") String username){
+        return new ResponseEntity<ArrayList<User>>(graphService.generateFollowRecommendations(username), HttpStatus.OK);
+    }
+
+
+    // @GetMapping(
+    //     produces = MediaType.APPLICATION_JSON_VALUE)
+    // public ResponseEntity<?> getAllPublicUsers(){
+    //     ArrayList<User> users = userService.getAllPublicUsers();
+    //     if(users.isEmpty())
+    //         return new ResponseEntity<>(HttpStatus.NO_CONTENT); 
+    //     return new ResponseEntity<ArrayList<User>>(userService.getAllPublicUsers(), HttpStatus.OK);
+    // }
 }
