@@ -12,36 +12,49 @@ import org.neo4j.driver.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import dislinkt.userService.Model.GraphSkill;
 import dislinkt.userService.Model.GraphUser;
 import dislinkt.userService.Model.User;
-import dislinkt.userService.Repository.GraphRepo;
+import dislinkt.userService.Repository.SkillGraphRepo;
+import dislinkt.userService.Repository.UserGraphRepo;
 import dislinkt.userService.Repository.UserRepo;
 
 @Service
 public class GraphService{
     @Autowired
-    GraphRepo graphRepo;
+    UserGraphRepo userGraphRepo;
+    @Autowired
+    SkillGraphRepo skillGraphRepo;
     @Autowired
     UserRepo userRepo;
+    
     AuthToken authToken = AuthTokens.basic("neo4j", "admin");
 
     public Collection<GraphUser> getAll(){
-        return graphRepo.findAll();
+        return userGraphRepo.findAll();
     }
 
-    public GraphUser save(String id, String username) {
-        return graphRepo.save(new GraphUser(id, username));
+    public GraphUser saveGraphUser(String id, String username, ArrayList<String> skills) {
+        GraphUser newGraphUser = new GraphUser(id, username, new ArrayList<>());
+        
+        for (String skill : skills) {
+            if(skillGraphRepo.findByName(skill) == null){
+                skillGraphRepo.save(new GraphSkill(skillGraphRepo.count() + 1 + "", skill));
+            }
+            newGraphUser.getSkills().add(skillGraphRepo.findByName(skill));
+        }
+        return userGraphRepo.save(newGraphUser);
     }
 
 
 
     public void follow(String followerUsername, String toFollowUsername) {
-        GraphUser followerUser = graphRepo.findByUsername(followerUsername);
-        GraphUser toFollowUser = graphRepo.findByUsername(toFollowUsername);
+        GraphUser followerUser = userGraphRepo.findByUsername(followerUsername);
+        GraphUser toFollowUser = userGraphRepo.findByUsername(toFollowUsername);
 
         followerUser.getFollowed().add(toFollowUser);
 
-        graphRepo.save(followerUser);
+        userGraphRepo.save(followerUser);
     }
 
     //TODO: Da li treba da vraca korisnike koji su privatni?
@@ -58,4 +71,7 @@ public class GraphService{
             return recommendedUsers;
         }
     }
+
+
+    
 }

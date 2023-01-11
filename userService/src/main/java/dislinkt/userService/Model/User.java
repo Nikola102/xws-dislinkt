@@ -5,15 +5,14 @@ import java.util.ArrayList;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Document(collection = "users")
-
 public class User {
     @Id
     private String id;
@@ -31,20 +30,23 @@ public class User {
     private ArrayList<String> following;
     private ArrayList<String> followRequests;
     private ArrayList<String> blocked;
+    private ArrayList<String> skills;
         
     private String experience;
     private String education;
-    private String skills;
     private String interests;
 
 
 
     private String apiToken;
 
-    public User(String username, String password, String name, String surname, String email, String phone,
+
+
+    public User(String id, String username, String password, String name, String surname, String email, String phone,
             String gender, String bio, boolean isPrivate, ArrayList<String> following, ArrayList<String> followRequests,
-            ArrayList<String> blocked, String experience, String education, String skills, String interests,
+            ArrayList<String> blocked, ArrayList<String> skills, String experience, String education, String interests,
             String apiToken) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.name = name;
@@ -57,9 +59,9 @@ public class User {
         this.following = following;
         this.followRequests = followRequests;
         this.blocked = blocked;
+        this.skills = skills;
         this.experience = experience;
         this.education = education;
-        this.skills = skills;
         this.interests = interests;
         this.apiToken = apiToken;
     }

@@ -1,11 +1,13 @@
 package dislinkt.userService.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 import org.springframework.data.neo4j.core.schema.Relationship.Direction;
+
 
 @Node
 public class GraphUser {
@@ -14,20 +16,22 @@ public class GraphUser {
     private String username;
     @Relationship(type = "FOLLOWING", direction = Direction.OUTGOING)
     private List<GraphUser> followed;
-    @Relationship(type = "HAS_SKILL", direction = Direction.OUTGOING)
-    private List<Skill> skills;
-    @Relationship(type = "INTERESTED_IN", direction = Direction.OUTGOING)
-    private List<Interest> interests;
-    @Relationship(type = "EXPERIENCE_IN", direction = Direction.OUTGOING)
-    private List<WorkExperience> experiences;
+    @Relationship(type = "HAS", direction = Direction.OUTGOING)
+    private List<GraphSkill> skills;
+    
+    // @Relationship(type = "INTERESTED_IN", direction = Direction.OUTGOING)
+    // private List<Interest> interests;
+    // @Relationship(type = "EXPERIENCE_IN", direction = Direction.OUTGOING)
+    // private List<WorkExperience> experiences;
 
     public GraphUser(){
 
     }
 
-    public GraphUser(String id, String username){
+    public GraphUser(String id, String username, ArrayList<GraphSkill> skills){
         this.id = id;
         this.username = username;
+        this.skills = skills;
     }
 
     public String getId() {
@@ -39,6 +43,14 @@ public class GraphUser {
 
     public List<GraphUser> getFollowed() {
         return followed;
+    }
+
+    public List<GraphSkill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<GraphSkill> skills) {
+        this.skills = skills;
     }
     
 }

@@ -14,7 +14,7 @@ public interface JobOfferRepo extends MongoRepository<JobOffer, String>{
     public void deleteById(String jobOfferId);
     public void deleteAll();
     public ArrayList<JobOffer> getByTitleContaining(String titlePart);
-    public ArrayList<JobOffer> getByTitleContainingOrDescriptionContainingOrTechnologyContains(String part1, String part2, String part3);
+    public ArrayList<JobOffer> getByTitleContainingOrDescriptionContainingOrSkillsContains(String part1, String part2, String part3);
     public ArrayList<JobOffer> getByCompanyId(String companyId);
 
 }

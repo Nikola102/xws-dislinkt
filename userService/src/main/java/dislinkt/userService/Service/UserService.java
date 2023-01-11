@@ -38,8 +38,7 @@ public class UserService {
         if(userExists){
             throw new IllegalStateException("Username already taken!");
         }
-
-        graphService.save(newUser.getId(), newUser.getUsername());
+        graphService.saveGraphUser(newUser.getId(), newUser.getUsername(), newUser.getSkills());
 
         return userRepo.save(newUser);
     }

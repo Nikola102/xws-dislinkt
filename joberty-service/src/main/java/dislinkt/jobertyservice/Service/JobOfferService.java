@@ -12,12 +12,15 @@ import dislinkt.jobertyservice.Repository.JobOfferRepo;
 public class JobOfferService {
     @Autowired
     private JobOfferRepo jobOfferRepo;
+    @Autowired
+    private GraphService graphService;
 
     public JobOffer findByJobOfferId (String id) {
         return jobOfferRepo.getById(id);
     }
     
     public JobOffer save (JobOffer jobOffer) {
+        graphService.saveJobOffer(jobOffer.getId(), jobOffer.getTitle(), jobOffer.getSkills());
         return jobOfferRepo.save(jobOffer);
     }
 
@@ -34,13 +37,13 @@ public class JobOfferService {
     }
 
     public ArrayList<JobOffer> findBySearch(String search){
-        ArrayList<JobOffer> jobOffers = jobOfferRepo.getByTitleContainingOrDescriptionContainingOrTechnologyContains(search, search, search);
+        ArrayList<JobOffer> jobOffers = jobOfferRepo.getByTitleContainingOrDescriptionContainingOrSkillsContains(search, search, search);
 
         return jobOffers;
     }
 
     public ArrayList<JobOffer> findBySearchPromoted(String search){
-        ArrayList<JobOffer> jobOffers = jobOfferRepo.getByTitleContainingOrDescriptionContainingOrTechnologyContains(search, search, search);
+        ArrayList<JobOffer> jobOffers = jobOfferRepo.getByTitleContainingOrDescriptionContainingOrSkillsContains(search, search, search);
         ArrayList<JobOffer> promotedJobOffers = new ArrayList<JobOffer>();
         for (JobOffer jobOffer : jobOffers) {
             if(jobOffer.getDislinktPromoted()){

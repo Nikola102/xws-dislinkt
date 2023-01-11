@@ -48,11 +48,17 @@ public class UserController {
     public void mdb(){
         System.out.println("mongodb.data called from userService controller");
         userService.deleteAllUsers();
-        userService.save(new User("id1", "Ivance69", "password", "Ivan", "Lukovic", "ivan@notuns.com", "0600000000", "male", "bio sam jak, vise nisam", false, new ArrayList<String>(), new ArrayList<String>(),new ArrayList<String>(), "", "", "", "", null));
-        userService.save(new User("id2", "ZiksaZmija", "password", "Mihajlo", "Zivkovic", "mihajlo@gmail.com", "0600000000", "male", "jak sam", false,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
-        userService.save(new User("id3", "IgorIbor", "password", "Igor", "Jakovljevic", "igor@gmail.com", "0600000000", "male", "jak sam", true,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
-        userService.save(new User("id4", "Buksa", "password", "Vukasin", "Lupurovic", "vukasin@gmail.com", "0600000000", "male", "jak sam", false,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
-        userService.save(new User("id5", "Mnikola", "password", "Nikola", "Matijevic", "nikola@gmail.com", "0600000000", "male", "jak sam", false, new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),"", "", "", "", null));
+        ArrayList<String> skills1 = new ArrayList<String>();
+        ArrayList<String> skills2 = new ArrayList<String>();
+        skills1.add("C#");
+        skills1.add(".NET");
+        skills2.add("C#");
+        skills2.add("Python");
+        userService.save(new User("id1", "Ivance69", "password", "Ivan", "Lukovic", "ivan@notuns.com", "0600000000", "male", "bio sam jak, vise nisam", false, new ArrayList<String>(), new ArrayList<String>(),new ArrayList<String>(), skills1, "", "", "", null));
+        userService.save(new User("id2", "ZiksaZmija", "password", "Mihajlo", "Zivkovic", "mihajlo@gmail.com", "0600000000", "male", "jak sam", false,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(), skills2, "", "", "", null));
+        // userService.save(new User("id3", "IgorIbor", "password", "Igor", "Jakovljevic", "igor@gmail.com", "0600000000", "male", "jak sam", true,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(), "", "", "", null));
+        // userService.save(new User("id4", "Buksa", "password", "Vukasin", "Lupurovic", "vukasin@gmail.com", "0600000000", "male", "jak sam", false,  new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(), "", "", "", null));
+        // userService.save(new User("id5", "Mnikola", "password", "Nikola", "Matijevic", "nikola@gmail.com", "0600000000", "male", "jak sam", false, new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(), "", "", "", null));
     }
 
     //send message

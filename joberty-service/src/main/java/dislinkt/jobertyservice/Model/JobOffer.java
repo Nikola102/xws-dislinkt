@@ -25,7 +25,7 @@ public class JobOffer {
     private String location;
     private String seniority;
     private String field;
-    private ArrayList<String> technology;
+    private ArrayList<String> skills;
     private String companyName;
     private Boolean dislinktPromoted;
 }

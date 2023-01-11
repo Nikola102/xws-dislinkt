@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import dislinkt.jobertyservice.Model.JobOffer;
+import dislinkt.jobertyservice.Service.GraphService;
 import dislinkt.jobertyservice.Service.JobOfferService;
 
 @RestController
@@ -23,20 +25,26 @@ import dislinkt.jobertyservice.Service.JobOfferService;
 public class JobOfferController {
     @Autowired
     private JobOfferService jobOfferService;
+    @Autowired
+    private GraphService graphService;
 
     //helper method to reset and fill data to mongo container
     @GetMapping(path = "/mongodbDataReset")
     public void mdb(){
         System.out.println("mongodb.data called from userService controller");
         jobOfferService.deleteAll();
-        ArrayList<String> list = new ArrayList<String>();
-        list.add("Java");
-        jobOfferService.save(new JobOffer("id1", "Molim neko java?", "https://www.youtube.com/watch?v=_QgcIfBZmZk", "id1", "Salaš", "entry", "java", list, "ImeComp", false ));
-        jobOfferService.save(new JobOffer("id2", "Molim neko pajton, salim se", "https://www.youtube.com/watch?v=_QgcIfBZmZk", "id1", "Salaš", "entry", "java", list, "ImeComp", false ));
-        list.add("Python");
-        jobOfferService.save(new JobOffer("id3", "Molim neko c++", "https://www.youtube.com/watch?v=_QgcIfBZmZk", "id1", "Salaš", "entry", "java", list, "CompIme", false ));
-        list.add("Lisp");
-        jobOfferService.save(new JobOffer("id4", "Molim neko f--", "https://www.youtube.com/watch?v=_QgcIfBZmZk", "id1", "Salaš", "entry", "java", list, "CompIme", false ));
+        ArrayList<String> list1 = new ArrayList<String>();
+        ArrayList<String> list2 = new ArrayList<String>();
+        list1.add("C#");
+        list1.add(".NET");
+        list2.add("Java");
+        list2.add("C#");
+        jobOfferService.save(new JobOffer("id1", "Molim neko java?", "asdasd", "id1", "Salaš", "entry", "java", list1, "ImeComp", false ));
+        jobOfferService.save(new JobOffer("id2", "Molim neko pajton, salim se", "sdfsdfsdf", "id1", "Salaš", "entry", "java", list2, "ImeComp", false ));
+        // list.add("Python");
+        // jobOfferService.save(new JobOffer("id3", "Molim neko c++", "zxczxczxc", "id1", "Salaš", "entry", "java", list, "CompIme", false ));
+        // list.add("Lisp");
+        //jobOfferService.save(new JobOffer("id4", "Molim neko f--", "cvbcvbcvbcvb", "id1", "Salaš", "entry", "java", list, "CompIme", false ));
 
     }
 
@@ -94,5 +102,13 @@ public class JobOfferController {
     public ResponseEntity<?> getJobOffersByCompany(@PathVariable String companyId){
         ArrayList<JobOffer> list = jobOfferService.getByCompanyId(companyId);
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+
+
+    //Neo4j
+    @GetMapping(path = "getRecommendations/{username}",
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> generateJobOfferRecommendations(@PathVariable("username") String username){
+        return new ResponseEntity<ArrayList<JobOffer>>(graphService.generateJobOfferRecommendations(username), HttpStatus.OK);
     }
 }
